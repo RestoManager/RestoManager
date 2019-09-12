@@ -23,7 +23,7 @@ $(document).ready(function(){
             url: "data/consultas.php",
             data: {instance: instance, categoria: $('#selectCat').val()},
             success: function(r){
-                $('#tablaItems').append(r);
+                $('#tablaItems').append(r).fadeIn();
                
             }
         });
