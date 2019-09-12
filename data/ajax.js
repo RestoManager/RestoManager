@@ -1,23 +1,37 @@
 $(document).ready(function(){
-    $('#btnSubmit').click(function(){
-        var datos= $('#formlg').serialize();
-        
-        $.ajax({
-            type:"POST",
-            url:"data/consultas.php",
-            data:datos,
-            success:function(r){
-                if(r==1){
-                    alert("agregado con exito");
-                }else{
-                    alert("Fallo el server");
-                }
-            }
-        });
-        
-        return false;
+    alert('chao');
+    
+    $.ajax({
+        type: "POST",
+        url: "data/consultas.php",
+        data: {instance: $('#instance1').val()},
+        success:function(r){
+            $('#selectCat').html(r);
+            alert('algo paso breder');
+        }
+
+
+
     });
-});
+
+ alert('hola');
+ 
+ 
+});      
+$('#Categori').change(function(){
+    alert('buscando items');
+
+    var catValue = $('#Categori').value();
+    $.ajax({
+        type: "POST",
+        url: "data/consultas.php",
+        data: {instance: $('#instance2').val(), cat: catValue},
+        success:function(r){
+            $('#selectItem').html(r);
+        }
+
+    });
+}); 
 
 
 
