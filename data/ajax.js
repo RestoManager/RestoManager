@@ -1,37 +1,38 @@
 $(document).ready(function(){
-    alert('chao');
-    
+  
+   var instance = 1; 
     $.ajax({
         type: "POST",
         url: "data/consultas.php",
-        data: {instance: $('#instance1').val()},
+        data: {instance: instance},
         success:function(r){
             $('#selectCat').html(r);
-            alert('algo paso breder');
+       
         }
 
 
 
     });
 
- alert('hola');
+    $('#selectCat').change(function(){
+        
+        instance = 2;
+        $('#tablaItems').html('');
+        $.ajax({
+            type: "POST",
+            url: "data/consultas.php",
+            data: {instance: instance, categoria: $('#selectCat').val()},
+            success: function(r){
+                $('#tablaItems').append(r);
+               
+            }
+        });
+    })
+
+
  
  
 });      
-$('#Categori').change(function(){
-    alert('buscando items');
-
-    var catValue = $('#Categori').value();
-    $.ajax({
-        type: "POST",
-        url: "data/consultas.php",
-        data: {instance: $('#instance2').val(), cat: catValue},
-        success:function(r){
-            $('#selectItem').html(r);
-        }
-
-    });
-}); 
 
 
 

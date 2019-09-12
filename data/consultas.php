@@ -8,23 +8,24 @@
         $sql = "SELECT * FROM categoria_item ";
         $result = mysqli_query($conexion,$sql);
         
-        echo '<select id="Categori">';
+       
         echo '<option value= 0 > Seleccione Categoria </option>';
         while($fila = mysqli_fetch_row($result)){
             echo '<option value='.$fila[0].'>'.utf8_encode($fila[1]).'</option>';
         }
-        echo '</select>';
+       
    }else{
-        if($instance == 1){
-            $sql = "SELECT * FROM item ";
+        if($instance == 2){
+            $idItem = $_POST['categoria'];
+            $sql = "SELECT * FROM item WHERE id_categoria_item = '$idItem' ";
             $result = mysqli_query($conexion,$sql);
         
-            echo '<select id="item">';
-            echo '<option value= 0 > Seleccione Item </option>';
+            echo '<tr>';
+            
             while($fila = mysqli_fetch_row($result)){
-            echo '<option value='.$fila[0].'>'.utf8_encode($fila[1]).'</option>';
+            echo '<td>'.utf8_encode($fila[1]).'</td><td>12/09</td><td>5 dias</td><td>20</td></tr>';
         }
-            echo '</select>';
+            
         }
     } 
 
