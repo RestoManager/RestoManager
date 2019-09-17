@@ -16,8 +16,9 @@
         
 
         case 'listItem':
+            $sector = ($_POST['sector'] == 'bodega') ? 1 : 2;
             $idCategoria = $_POST['categoria'];
-            $sql = "SELECT * FROM item WHERE id_categoria_item = '$idCategoria'";
+            $sql = "SELECT * FROM item WHERE id_tipo_item = $sector AND id_categoria_item = '$idCategoria'";
             
             $result = mysqli_query($conexion,$sql);
             
@@ -42,7 +43,7 @@
                 INNER JOIN categoria_item AS c ON it.id_categoria_item = c.id_categoria_item
                 INNER JOIN tipo_item AS ti ON it.id_tipo_item = ti.id_tipo_item
                 INNER JOIN unidad AS u ON it.id_unidad = u.id_unidad
-                LEFT JOIN registro_bodega AS r ON t.id_tenencia = r.id_tenencia
+                INNER JOIN registro_bodega AS r ON t.id_tenencia = r.id_tenencia
                 LEFT JOIN registro_bodega AS r2
                 ON r.id_tenencia = r2.id_tenencia AND ((r.id_registro_bodega < r2.id_registro_bodega) 
                     OR (r.id_registro_bodega = r2.id_registro_bodega AND r.id_registro_bodega < r2.id_registro_bodega))
@@ -87,14 +88,12 @@
 
         case 'addTenencia':
             $sector = ($_POST['sector'] == 'bodega') ? 1 : 2;
-            $idCategoria = $_POST['idCategoria'];
         
             $sql = "SELECT it.nombre AS item, t.cantidad AS disponible, t.fecha AS fecha, t.id_tenencia
                 FROM tenencia AS t
                 INNER JOIN item AS it ON t.id_item = it.id_item
                 INNER JOIN categoria_item AS c ON it.id_categoria_item = c.id_categoria_item
                 WHERE it.id_tipo_item = '$sector'
-                AND it.id_categoria_item = '$idCategoria'
                 AND t.id_tenencia NOT IN (SELECT r.id_tenencia FROM registro_bodega AS r)
                 ORDER BY c.nombre, it.nombre ASC";
             
@@ -105,6 +104,18 @@
             while($fila = mysqli_fetch_row($result)){
                 echo '<td>'.utf8_encode($fila[0]).'</td><td>'.$fila[1].'</td><td>'.$fila[2].'</td><td><input type="radio" name="itemsel" value='.$fila[3].'></td></tr>';
             }
+
+            break;
+
+
+        case 'ingresoBodega':
+            $idTenencia = $_POST['idTenencia'];
+            $cantidad = $_POST['cantidad'];
+        
+            $sql = "INSERT INTO registro_bodega (cantidad, en_inventario, hora, id_tenencia, id_tipo_registro)
+                VALUES ('$cantidad', '$cantidad', CURTIME(), '$idTenencia', 1)";
+
+            mysqli_query($conexion, $sql);
 
             break;
 
