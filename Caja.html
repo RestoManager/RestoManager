@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+
+<head>
+	<link rel="stylesheet" href="estilos.css">
+	
+		
+	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container-block main" id="MainCaja">
+		<div class="MenuPrincipal container row">
+			<div class="col-md-7">
+				<button class="btn btn-outline-secondary">Caja</button>
+				<button class="btn btn-outline-secondary">Apertura/Cierre</button>
+				<button class="btn btn-outline-secondary" onclick="listaEspera()">Lista Espera</button>
+				<button class="btn btn-outline-secondary" onclick="listaVentas()">Ventas</button>
+			</div>
+			<div class="col-md-3">Supervisor: Andres Caja: Andres</div>
+		</div>
+		<div class="Titulo">
+			<h1 style="color:white;">Resto Caja</h1>
+			
+		</div>
+
+		<div class="container">
+			<div id="Mensajes"></div>
+		</div>
+		<div class="container-flex botonesMesas">
+			<button class="btn btn-dark togo"onclick="Mesas(this.value)" value="0">Uber Eats</button>
+			<button class="btn btn-dark botonMesa"onclick="Mesas(this.value)"  value="1">1</button>
+			<button class="btn btn-dark botonMesa"onclick="Mesas(this.value)"  value="2">2</button>
+			<button class="btn btn-dark botonMesa"onclick="Mesas(this.value)"  value="3">3</button>
+			<button class="btn btn-dark botonMesa"onclick="Mesas(this.value)"  value="4">4</button>
+			<button class="btn btn-dark botonMesa"onclick="Mesas(this.value)"  value="5">5</button>
+			<button class="btn btn-dark botonMesa"onclick="Mesas(this.value)"  value="6">6</button>
+			<button class="btn btn-dark botonMesa"onclick="Mesas(this.value)"  value="7">7</button>
+			<button class="btn btn-dark botonMesa"onclick="Mesas(this.value)"  value="8">8</button>
+			<button class="btn btn-dark botonMesa"onclick="Mesas(this.value)"  value="9">9</button>
+			<button class="btn btn-dark togo"onclick="Mesas(this.value)" value="10">ToGo</button>
+		</div>
+		
+		<div id="botonesPrincipales" class="botonesPrincipales">
+			<button class="btn btn-danger botonPrincipal" onclick="selectType(this.value)" value="Aperitivos"> Aperitivos</button>
+			<button class="btn btn-danger botonPrincipal" onclick="selectType(this.value)" value="Hamburguesas">Hamburguesas</button>
+			<button class="btn btn-danger botonPrincipal" onclick="selectType(this.value)" value="Bebestibles">Bebestibles</button>
+			<button class="btn btn-danger botonPrincipal" onclick="selectType(this.value)" value="Postres">Postres</button>
+			<button class="btn btn-danger botonPrincipal" onclick="selectType(this.value)" value="Bebestibles">Extras</button>
+		</div>
+		<div class="container row botonesYlista">
+			<div class="col-md-1"></div>
+			
+				<div class="col-md-6">
+						<div class="curMesa" >
+								<h3 id="numMesa" class="center"></h3>
+						</div>
+						<div id="vida" ></div>
+						<div class="total">Total</div>
+			<div id="Total">$0</div>
+						
+						
+				</div>
+			<div class="col-md-5">
+
+				<div class="botonesItems">
+
+					<div id="botonesAperitivos">
+						<button class="btn btn-primary btn-block" onclick="selectItem(this.value)" value="aros">Aros de Cebolla</button>
+						<button class="btn btn-primary btn-block" onclick="selectItem(this.value)" value="falafel">Falafel</button>
+						<button class="btn btn-primary btn-block" onclick="selectItem(this.value)" value="nuggets">Nuggets</button>
+						<button class="btn btn-primary btn-block" onclick="selectItem(this.value)" value="supremas">Supremas</button>
+						<br>
+						
+					</div>
+	
+					<div id="botonesHamburguesas">
+						<div>
+							<button class="btn btn-primary botonBurger btn-flex" onclick="selectItem(this.value)" value="satanica">Satanica</button>
+							<button class="btn btn-primary botonBurger btn-flex" onclick="selectItem(this.value)" value="satanicaB">Satanica Bronto</button>
+							<br>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="enganosa">Enganosa</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="enganosaB">Enganosa Bronto</button>
+							<br>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="vroaster">Vroaster</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="vroasterB">Vroaster Bronto</button>
+							<br>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="frijolera">Frijolera</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="frijoleraB">Frijolera Bronto</button>
+							<br>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="andina">Andina</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="andinaB">Andina Bronto</button>
+							<br>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="clasica">Clasica</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="clasicaB">Clasica Bronto</button>
+							<br>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="exotica">Exotica</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="exoticaB">Exotica Bronto</button>
+						</div>
+	
+						
+	
+					</div>
+	
+					<div id="botonesBebestibles">
+						<button class="btn btn-primary botonBurger" onclick="mostrarSabores(this.value)" value="bebida">Bebida</button>
+						<button class="btn btn-primary botonBurger" onclick="mostrarSabores(this.value)" value="TRex">Tea-Rex</button>
+						<button class="btn btn-primary botonBurger" onclick="mostrarSabores(this.value)" value="Jugo">Jugo Natural</button>
+						<button class="btn btn-primary botonBurger">Limonada</button>
+						<button class="btn btn-primary botonBurger" onclick="mostrarSabores(this.value)" value="Kombu">Kombucha</button>
+	
+					</div>
+					<div id="botonesBebidas">
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="cocaN">Coca</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="cocaZ">Coca Zero</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="fantaN">Fanta</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="fantaZ">Fanta Zero</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="spriteN">Sprite</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="spriteZ">Sprite Zero</button>
+					</div>
+					
+					<div id="botonesJugos">
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="jugoMan">Mango</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="jugoMel">Melon</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="jugoFru">Frutilla</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="jugoFram">Frambuesa</button>
+					
+					</div>
+					<div id="botonesTe">
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="TVL">TVL</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="TVD">TVD</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="TNL">TNL</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="TND">TND</button>
+					
+					</div>
+					<div id="botonesKombu">
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="kombuO">Original</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="kombuS">Sun-Shot</button>
+						<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="kombuH">Heart-Beat</button>
+						
+					
+					</div>
+					<div id="botonesPostres">
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="brownie">Brownie</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="brownieH">Brownie con Helado</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="conoS">Cono Simple</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="conoD">Cono Doble</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="cafeGrano">Cafe Grano</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="nescafe">Nescafe</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="triceratops">Copa Helado</button>
+							<button class="btn btn-primary botonBurger" onclick="selectItem(this.value)" value="tetera">Tetera</button>
+						</div>
+						
+						<div id="botonCancelaBorrar">
+							<button class="btn btn-block btn-outline-danger"onclick="cancelaBorrar()">Cancelar</button>
+						</div>
+					</div>
+				<div class="botonesOperativos">
+						<button class="btn botonOperativo btn-success"onclick="preGuardar()">Guardar</button>
+						<button class="btn botonOperativo btn-warning"onclick="borrar()">Borrar</button>
+						<button class="btn botonOperativo btn-danger"onclick="prePagar()">Pagar</button>
+						<button class="btn botonOperativo btn-secondary"onclick="imprimir()">Imprimir</button>
+					
+						
+		
+				</div>
+			</div>
+			
+			
+			
+			
+		</div>
+		
+			
+
+		
+		
+	</div>
+
+	<div id="aPagar">
+		<div class="tra container-block"></div>
+		
+		<div id="detalle"></div>
+		<div id="totalPagar"></div>
+		<div>
+			<div id="transasBtns">
+				<button onclick="formaPago = this.value" value="efectivo">Efectivo</button>
+				<button onclick="formaPago = this.value" value="debito">Debito</button>
+				<button onclick="formaPago = this.value" value="credito">Credito</button>
+				<button onclick="custom()">Custom</button>
+			</div>
+			<br>
+			
+			<div id="propi">
+				<input type="text" id="inPropina">Propina
+			</div>
+			<br>
+			<button onclick="pagar()">Pagar</button>
+			<button onclick="selectType(this.value)" value="volver" id="volverBtn">Volver</button>
+		</div>
+		
+		
+		
+		
+		
+	</div>
+	<div id="transas">
+		<div class="tra"></div>
+		<div id="muestraTrans"></div>
+		<br>
+		<div id="Compras"></div>
+		<div class="row allMesas">
+				<div class="col-md-1 cadaMesa noMostrar"></div>
+			<button class="col-md-1 cadaMesa btn-outline-dark" onclick="cambiarMesa(this.value)" value="1">Mesa 1</button>
+			<button class="col-md-1 cadaMesa btn-outline-dark" onclick="cambiarMesa(this.value)" value="2">Mesa 2</button>
+			<button class="col-md-1 cadaMesa btn-outline-dark" onclick="cambiarMesa(this.value)" value="3">Mesa 3</button>
+			<button class="col-md-1 cadaMesa btn-outline-dark" onclick="cambiarMesa(this.value)" value="4">Mesa 4</button>
+			<button class="col-md-1 cadaMesa btn-outline-dark" onclick="cambiarMesa(this.value)" value="5">Mesa 5</button>
+			<button class="col-md-1 cadaMesa btn-outline-dark" onclick="cambiarMesa(this.value)" value="6">Mesa 6</button>
+			<button class="col-md-1 cadaMesa btn-outline-dark" onclick="cambiarMesa(this.value)" value="7">Mesa 7</button>
+			<button class="col-md-1 cadaMesa btn-outline-dark" onclick="cambiarMesa(this.value)" value="8">Mesa 8</button>
+			<button class="col-md-1 cadaMesa btn-outline-dark" onclick="cambiarMesa(this.value)" value="9">Mesa 9</button>
+			<button class="col-md-2 totalMesasDraft">Total</button>
+		</div>
+		<button onclick="selectType(this.value)" value="volver" id="volverBtn">Volver</button>
+		<button onclick="cambiandoMesa = true">Cambio Mesa</button>
+			
+	</div>
+	<div id="ventanaAlertas" class="window"> 
+		<div id="passJefe">
+			<p>No TE HAGAI EL VIo KTMRE</p>
+			<p>Passwor</p>
+			<input type="password" style="margin-bottom: 10px" maxlength="4"> 
+			<br>
+			<button class="btn btn-danger">Aceptar</button>
+			<button class="btn btn-warning" onclick="cerrarVentana()">Cancelar</button>
+		</div>
+	</div>
+	<div id="listaEspera">
+		<div class="tra"></div>
+		<div id="ingresaList">
+			<input type="text" name="" id="nombre">
+			<br>
+			<button onclick="adduser()">Mas</button>
+			<button onclick="subtractuser()">Menos</button>
+			<button onclick="submituser()">Agregar</button>
+			<div id="Personas">Numero de personas= 0</div>
+			<div id="Lista">sdfsdfsdfsd d</div>
+			<button onclick="selectType(this.value)" value="volver" id="volverBtn">Volver</button>
+		</div>
+
+	</div>
+</body>
+
+<footer>
+	<script type="text/javascript" src="CajaFunctions.js"></script>
+	<script type="text/javascript" src="listaDeEspera.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+
+</footer>
+
+
+
+
+
+
+</html>

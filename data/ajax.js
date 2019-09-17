@@ -1,5 +1,7 @@
 $(document).ready(function(){
   
+    // Llena los select de categorias
+
     var instance = 1; 
     $.ajax({
         type: "POST",
@@ -8,13 +10,10 @@ $(document).ready(function(){
         success:function(r){
             $('#selectCat').html(r);
             $('#selectCat2').html(r);
-       
         }
-
-
-
     });
 
+    // Llena la tabla de items
     $('#selectCat').change(function(){
         instance = 2;
         
@@ -30,6 +29,7 @@ $(document).ready(function(){
         });
     });
 
+    //Llena el select de items en COMPRA
     $('#selectCat2').change(function(){
         instance = 2;
         $('#selectItem').html('');
@@ -43,6 +43,8 @@ $(document).ready(function(){
             }
         });
     });
+
+    // envia datos de compra al servidor
     var vuelta = 0;
     $('#enviarCompra').click(function(){
         instance = 3;
