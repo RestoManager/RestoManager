@@ -47,22 +47,22 @@
             }
         }else{
 
-               if($instance == 2 && $status == 'comprando'){
-                   
+            if($instance == 2 && $status == 'comprando'){
+                
                 $idItem = $_POST['categoria'];
 
-                   $sql = "SELECT * FROM item WHERE id_categoria_item = '$idItem'";
-                    
-                    $result = mysqli_query($conexion,$sql);
+                $sql = "SELECT * FROM item WHERE id_categoria_item = '$idItem'";
                 
-                   echo '<option value= 0 > Seleccione Item </option>';
+                $result = mysqli_query($conexion,$sql);
+                
+                echo '<option value= 0 > Seleccione Item </option>';
 
-                   while($fila = mysqli_fetch_row($result)){
-                       echo '<option value='.$fila[0].'>'.utf8_encode($fila[1]).'</option>';
-                   }
+                while($fila = mysqli_fetch_row($result)){
+                    echo '<option value='.$fila[0].'>'.utf8_encode($fila[1]).'</option>';
+                }
                     
     
-                }
+            }
             
         } 
     }
@@ -91,5 +91,16 @@
         }
     }
 
+    if ($instance == 3 & $status == 'retiroBodega') {
+        $idTenencia = $_POST['idTenencia'];
+        $cantidad = $_POST['cuanto'];
+
+        $sql = "INSERT INTO registro_bodega (cantidad, en_inventario, hora, id_tenencia, id_tipo_registro)
+            VALUES ('$cantidad', 
+                (SELECT r.en_inventario FROM registro_bodega r WHERE r.id_tenencia = '$idTenencia' ORDER BY r.id_registro_bodega DESC LIMIT 1) - '$cantidad',
+                CURTIME(), '$idTenencia', 3);"
+        
+        $result = mysqli_query($conexion,$sql);
+    }
 
 ?>
