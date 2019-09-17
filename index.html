@@ -19,9 +19,9 @@
             <button id="mostrarCurItems" class="btn btn-primary">Bodega</button>
             <button id="comprar" class="btn btn-primary">Compra</button>
         </div>
-
-
-
+        
+        
+        
         <div class="container currentItems">
 
             <div class="container container-block mt-2">
@@ -47,16 +47,27 @@
                 </table>
     
             </div>
+            <button id="retiro" class="btn btn-primary">Retiro</button>
         </div>
+        
+        
         <div class="container addItems mt-2 container-block">
             <select name="selectCat2" id="selectCat2" class="form-control"></select>
             <select name="selectItem" id="selectItem" class="form-control"></select>
             <input type="number" placeholder="Cuanto por unitario" name="costo" id="costo" class="form-control">
             <input type="number" placeholder="Cantidad" name="cantidad" id="cantidad" class="form-control">
             <button class="btn btn-danget" id="enviarCompra">Enviar</button>
+        </div>
 
+        <div class="retiroItems container mt-2 container-block">
+                <select name="selectCat3" id="selectCat3" class="form-control"></select>
+                <select name="selectItem2" id="selectItem2" class="form-control"></select>
+                
+                <input type="number" placeholder="Cantidad" name="cantidad2" id="cantidad2" class="form-control">
+                <button class="btn btn-danget" id="enviarRetiro">Enviar</button>
 
         </div>
+
     </div>
 
     
@@ -71,5 +82,6 @@
     <script src="data/ajax.js"></script>
     <script src="data/recargaDatos.js"></script>
     <script src="visual/showhide.js"></script>
+    <script src="functions/bodegaFunctions.js"></script>
 </footer>
 </html>

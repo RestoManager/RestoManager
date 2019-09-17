@@ -4,7 +4,7 @@
     $instance = $_POST['instance'];
 
     if($instance == 1){
-
+        // Llena Select
         $sql = "SELECT * FROM categoria_item ";
         $result = mysqli_query($conexion,$sql);
         
@@ -15,6 +15,8 @@
         }
        
    }else{
+       //Muestra la lista de la bodega
+
        $status = $_POST['stat'];
        
        if($instance == 2 && $status == 'mostrando'){
@@ -42,11 +44,11 @@
             echo '<tr>';
             
             while($fila = mysqli_fetch_row($result)){
-                echo '<td>'.utf8_encode($fila[1]).'</td><td>'.$fila[2].'</td><td>'.$fila[3].'</td><td>'.$fila[4].'</td><td><input type="radio" name="itemsel" value='.$fila[5].'></td></tr>';
+                echo '<td>'.utf8_encode($fila[1]).'</td><td>'.$fila[2].'</td><td>'.$fila[3].'</td><td>'.$fila[4].'</td><td><input type="radio" name="itemsel" id="itemradio" value='.$fila[5].'></td></tr>';
 
             }
         }else{
-
+            // Carga el select con items en compra
                if($instance == 2 && $status == 'comprando'){
                    
                 $idItem = $_POST['categoria'];
