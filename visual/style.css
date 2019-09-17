@@ -4,3 +4,12 @@
     color: white;
     font-size: 30px;
 }
+
+.botonesMenu{
+    text-align: center;
+}
+
+#tablaItems{
+    overflow-y: auto;
+    height: 400px;
+}

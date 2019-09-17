@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="visual/style.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container mt-2 mainApp">
+
+        <div class="container title">
+            <h1>HOLA CHILE</h1>
+        </div>
+        <a href="index.html">Volver</a>
+
+        <div class="container container-block mt-2 botonesMenu">
+            <button id="listItems" class="btn btn-primary">List</button> 
+            <button id="addComprar" class="btn btn-primary">addProduccion</button>
+            <button id="wasteBodegaList" class="btn btn-primary">WasteList</button>
+            
+        </div>
+        
+        
+        
+        <div class="container listItems">
+
+            <div class="container container-block mt-2">
+                <select name="selectCat" id="selectCat" class="form-control">
+                    <option value="0">aun no carga nada perre</option>
+                    <option value="1">ahora si cambio perre</option>
+                </select>
+            </div>
+    
+            <div class="container">
+                <table class="table" >
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Fecha</th>
+                            <th>Tiempo restante</th>
+                            <th>Cantidad</th>
+                            <th>Select</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaItems" >
+                        <tr>
+                            <td>sleccione</td>
+                            <td>una</td>
+                            <td>categoria</td>
+                            <td>para enpezar</td>
+                            <td><input type="radio" name="itemsel" id="itemradio" value="0"></td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+            </div>
+            <div>
+                    <button id="wasteBodega" class="btn btn-primary">Waste</button>
+            </div>
+        </div>
+        
+        
+       
+        <div class="container addCompra mt-2 container-block">
+            <div class="container">
+
+                <table class="table" >
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Fecha</th>
+                                <th>Cantidad</th>
+                                <th>Select</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaCompras" >
+                            <tr>
+                                <td>CocaCola</td>
+                                <td>14/8</td>
+                                <td>20</td>
+                                <td><input type="radio" name="itemsel" id="itemradio" value="0"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+        
+
+        </div>
+
+        <div class="retiroProduccion container mt-2 container-block">
+                <select name="selectCat3" id="selectCat3" class="form-control"></select>
+                <select name="selectItem2" id="selectItem2" class="form-control"></select>
+                <input type="number" placeholder="Cantidad" name="cantidad2" id="cantidad2" class="form-control">
+                <button class="btn btn-danget" id="enviarRetiro">Enviar</button>
+
+        </div>
+
+       
+
+        <div class="container wasteBodegaList mt-2 container-block">
+                <div class="container">
+
+                        <table class="table" >
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Fecha</th>
+                                        <th>Cantidad</th>
+                                        <th>Select</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaWaste" >
+                                    <tr>
+                                        <td>CocaCola</td>
+                                        <td>14/8</td>
+                                        <td>20</td>
+                                        <td><input type="radio" name="itemsel" id="itemradio" value="0"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                
+        
+        </div>
+
+    </div>
+
+    
+    
+    
+</body>
+<footer>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="data/ajaxBodProduccion.js"></script>
+    
+    <script src="visual/showhideProduccion.js"></script>
+  
+</footer>
+</html>

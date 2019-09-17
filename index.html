@@ -1,87 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="visual/style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="visual/style.css">
+
     <title>Document</title>
 </head>
 <body>
-    <div class="container mt-2 mainApp">
-
-        <div class="container title">
-            <h1>HOLA CHILE</h1>
+    <div class="container container-block mainApp">
+        <div class="title">
+            <h3>Bienvenide a Resto Manager</h3>
+        </div>
+        <div>
+            <a class="btn btn-danger btn-block" href="Caja.html">Caja Registradora</a>
+            <a class="btn btn-danger btn-block" href="bodega.html">Bodega</a>
+            <a class="btn btn-danger btn-block" href="bodProduccion.html">Produccion</a>
+            <a class="btn btn-danger btn-block" href="compra.html">Comprar</a>
+            <a class="btn btn-danger btn-block" href="produccion.html">Lista Produccion</a>
+            <a class="btn btn-danger btn-block" href="agregarquitar.html">Agregar o Quitar items</a>
         </div>
 
-        <div class="container container-block ">
-            <button id="mostrarCurItems" class="btn btn-primary">Bodega</button>
-            <button id="comprar" class="btn btn-primary">Compra</button>
-        </div>
-        
-        
-        
-        <div class="container currentItems">
 
-            <div class="container container-block mt-2">
-                <select name="selectCat" id="selectCat" class="form-control">
-                    
-                </select>
-            </div>
-    
-            <div class="container">
-                <table class="table" >
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>Fecha</th>
-                            <th>Tiempo restante</th>
-                            <th>Cantidad</th>
-                            <th>Select</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaItems">
-    
-                    </tbody>
-                </table>
-    
-            </div>
-            <button id="retiro" class="btn btn-primary">Retiro</button>
-        </div>
-        
-        
-        <div class="container addItems mt-2 container-block">
-            <select name="selectCat2" id="selectCat2" class="form-control"></select>
-            <select name="selectItem" id="selectItem" class="form-control"></select>
-            <input type="number" placeholder="Cuanto por unitario" name="costo" id="costo" class="form-control">
-            <input type="number" placeholder="Cantidad" name="cantidad" id="cantidad" class="form-control">
-            <button class="btn btn-danget" id="enviarCompra">Enviar</button>
-        </div>
 
-        <div class="retiroItems container mt-2 container-block">
-                <select name="selectCat3" id="selectCat3" class="form-control"></select>
-                <select name="selectItem2" id="selectItem2" class="form-control"></select>
-                
-                <input type="number" placeholder="Cantidad" name="cantidad2" id="cantidad2" class="form-control">
-                <button class="btn btn-danget" id="enviarRetiro">Enviar</button>
 
-        </div>
 
     </div>
-
-    
-    
-    
 </body>
 <footer>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="jquery-3.2.1.min.js"></script>
-    <script src="data/ajax.js"></script>
-    <script src="data/recargaDatos.js"></script>
-    <script src="visual/showhide.js"></script>
-    <script src="functions/bodegaFunctions.js"></script>
+        <script src="jquery-3.2.1.min.js"></script>
 </footer>
 </html>
