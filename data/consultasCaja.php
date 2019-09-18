@@ -24,9 +24,5 @@
             
             mysqli_query($conexion, $sql);
             break;
-
-
-        case 'addAperturaCaja':
-            
     }
 ?>
