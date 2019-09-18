@@ -1,33 +1,23 @@
 $(document).ready(function(){
-  
-    // Llena los select de categorias CHECK
-
-    var instance = 1; 
-    $.ajax({
-        type: "POST",
-        url: "data/consultas.php",
-        data: {instance: instance},
-        success:function(r){
-            $('#selectCat').html(r);
-            
-        }
-    });
+   
+    
 
     // Llena la tabla de items CHECK
 
     $('#selectCat').change(function(){
-        instance = 2;
-        $('#tablaItems').css('display', 'block');
+       curStatus = "listBodega";
+        
         $('#tablaItems').html('');
         $.ajax({
             type: "POST",
-            url: "data/consultas.php",
-            data: {instance: instance, categoria: $('#selectCat').val(), stat: curStatus},
+            url: "data/consultasBodega.php",
+            data: {categoria: $('#selectCat').val(), curStatus: curStatus, sector: sector},
             success: function(r){
                 $('#tablaItems').append(r);
                
             }
         });
+
     });
 
   
@@ -55,18 +45,7 @@ $(document).ready(function(){
 
     //Compras que aun no llegan
     
-    $('#addComprar').click(function(){
-
-        $.ajax({
-            type: "POST",
-            url: "data/consultas.php",
-            data: {curStatus : curStatus},
-            success: function(r){
-              //  $('tablaCompras').html(r);
-            }
-        });
-    });
- 
+   
 });      
 
 

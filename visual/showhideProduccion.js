@@ -27,16 +27,22 @@ $(document).ready(function(){
 
 
     $('#addComprar').click(function(){
+
         $('.listItems').css('display', 'none');
         $('.addCompra').css('display', 'block');
-        $('.wasteBodegaList').css('display', 'none');
         $('.retiroProduccion').css('display', 'none');
+        $('.wasteBodegaList').css('display', 'none');
 
-
-        $('.title').html('addProduccion');
-        curStatus = "addProduccion";
-
-
+        $('.title').html('addCompra');
+        curStatus = "addTenencia";
+        $.ajax({
+            type: "POST",
+            url: "data/consultasBodega.php",
+            data: {curStatus: curStatus, sector: sector },
+            success: function(r){
+                $('#tablaCompras').html(r);
+            }
+        });
     });
 
 

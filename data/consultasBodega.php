@@ -94,7 +94,6 @@
                 INNER JOIN item AS it ON t.id_item = it.id_item
                 INNER JOIN categoria_item AS c ON it.id_categoria_item = c.id_categoria_item
                 WHERE it.id_tipo_item = '$sector'
-                AND it.id_categoria_item = '$idCategoria'
                 AND t.id_tenencia NOT IN (SELECT r.id_tenencia FROM registro_bodega AS r)
                 ORDER BY c.nombre, it.nombre ASC";
             
@@ -103,7 +102,7 @@
             echo '<tr>';
             
             while($fila = mysqli_fetch_row($result)){
-                echo '<td>'.utf8_encode($fila[0]).'</td><td>'.$fila[1].'</td><td>'.$fila[2].'</td><td><input type="radio" name="itemsel" value='.$fila[3].'></td></tr>';
+                echo '<td>'.utf8_encode($fila[0]).'</td><td>'.$fila[2].'</td><td>'.$fila[1].'</td><td><input type="radio" name="itemsel" value='.$fila[3].'></td></tr>';
             }
 
             break;

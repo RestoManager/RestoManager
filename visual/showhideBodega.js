@@ -8,12 +8,23 @@ $(document).ready(function(){
     $('.wasteBodegaList').css('display', 'none');
 
     $('.title').html('Main');
-    curStatus = "";
-      
-    $('#tablaItems').css('display', 'none');
+   
 
-
+    // Llena select de categorias CHECK
     $('#listItems').click(function(){
+        curStatus = "listCategoria";
+        
+        $('#selectCat').html('');
+        $.ajax({
+            type: "POST",
+            url: "data/consultasBodega.php",
+            data: {curStatus: curStatus},
+            success:function(r){
+                $('#selectCat').html(r);
+                
+                
+            }
+        });
         $('.listItems').css('display', 'block');
         $('.addCompra').css('display', 'none');
         $('.retiroProduccion').css('display', 'none');
@@ -25,13 +36,23 @@ $(document).ready(function(){
     });
 
     $('#addComprar').click(function(){
+
         $('.listItems').css('display', 'none');
         $('.addCompra').css('display', 'block');
         $('.retiroProduccion').css('display', 'none');
         $('.wasteBodegaList').css('display', 'none');
 
         $('.title').html('addCompra');
-        curStatus = "addCompra";
+        curStatus = "addTenencia";
+        $.ajax({
+            type: "POST",
+            url: "data/consultasBodega.php",
+            data: {curStatus: curStatus, sector: sector },
+            success: function(r){
+                $('#tablaCompras').html(r);
+            }
+        });
+
 
     });
 
