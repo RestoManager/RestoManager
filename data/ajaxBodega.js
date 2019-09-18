@@ -31,7 +31,7 @@ $(document).ready(function(){
 
     $('#enviarRetiro').click(function(){
         
-        if(curStatus = "retiroBodega"){
+    
 
             var cuanto = $('#cantidad2').val();
             $.ajax({
@@ -44,7 +44,7 @@ $(document).ready(function(){
                 }
     
             });
-        }
+        
       
 
     });
@@ -53,19 +53,20 @@ $(document).ready(function(){
 
     $('#agregarCompra').click(function(){
         curStatus = "ingresoBodega";
+        var cantidad = $('#cantidadEntrada').val();
+
         for(i=0; i< tablas.rows.length; i++){
             let col = tablas.rows[i].getElementsByTagName('td');
 
-            if(col[4].firstChild.checked){
-                tenencia = col[4].firstChild.value ;
+            if(col[3].firstChild.checked){
+                tenencia = col[3].firstChild.value ;
             }
         }
-        let cantidad = $('#cantidadEntrada').val();
 
         $.ajax({
             type: "POST",
             url: "data/consultasBodega.php",
-            data: {tenencia: tenencia, cantidad: cantidad},
+            data: {idTenencia: tenencia, cantidad: cantidad, curStatus: curStatus},
             success: function(){
                 alert('Ya esta adentro jefe!');
             }
@@ -83,7 +84,21 @@ $(document).ready(function(){
 
     //Waste
 
-    
+    $('#showWaste').click(function(){
+        var ano = $('#Ano').val();
+        var mes = $('#Mes').val();
+        curStatus = "listWaste";
+        $('#tablaWaste').html('');
+        $.ajax({
+            type: "POST",
+            url: "data/consultasBodega.php",
+            data: {sector: sector, ano: ano, mes: mes, curStatus: curStatus},
+            success: function(r){
+                $('#tablaWaste').append(r);
+                alert('hola');
+            }
+        });
+    });
    
 });      
 

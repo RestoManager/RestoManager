@@ -93,8 +93,8 @@
                         </tbody>
                     </table>
             </div>
-            <input type="number" name="" id="cantidadEntrada" placeholder="Cuanto llegó">
-            <button id="agregarCompra">Agregar a bodega</button>
+            <input type="number" name="cantidadEntrada" id="cantidadEntrada" placeholder="Cuanto llegó">
+            <button id="agregarCompra" class="btn btn-danger">Agregar a bodega</button>
         
         </div>
 
@@ -112,23 +112,24 @@
        
 
         <div class="container wasteBodegaList mt-2 container-block">
-
-                <div class="container">
-                        <table class="table" >
+                <div>
+                    <input type="number" id="Mes" min="1" max="12"> Mes
+                    <input type="number" id="Ano" min="2019" max="2040"> año 
+                    <button class="btn btn-danger" id="showWaste">VER</button>
+                </div>
+                <div class=" tablillas">
+                        <table class="table " >
                                 <thead>
                                     <tr>
                                         <th>Item</th>
-                                        <th>Fecha</th>
                                         <th>Cantidad</th>
-                                        <th>Select</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody id="tablaWaste" >
                                     <tr>
                                         <td>CocaCola</td>
                                         <td>14/8</td>
-                                        <td>20</td>
-                                        <td><input type="radio" name="itemsel" id="itemradio" value="0"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -148,7 +149,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="jquery-3.2.1.min.js"></script>
     <script src="data/ajaxBodega.js"></script>
-    <script src="data/recargaDatos.js"></script>
     <script src="visual/showhideBodega.js"></script>
  
 </footer>

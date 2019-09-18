@@ -70,7 +70,7 @@ $(document).ready(function(){
         $('.wasteBodegaList').css('display', 'none');
 
         $('.title').html('Retiro a Produccion');
-        curStatus = "retiroBodega";
+        curStatus = "waste";
 
         for(i=0; i< tablas.rows.length; i++){
             let col = tablas.rows[i].getElementsByTagName('td');
@@ -90,10 +90,19 @@ $(document).ready(function(){
         $('.addCompra').css('display', 'none');
         $('.retiroProduccion').css('display', 'block');
         $('.wasteBodegaList').css('display', 'none');
+        for(i=0; i< tablas.rows.length; i++){
+            let col = tablas.rows[i].getElementsByTagName('td');
 
+            if(col[4].firstChild.checked){
+                $('#nItem').val(col[0].innerHTML);
+                $('#disponible').val(col[3].innerHTML);
+                tenencia = col[4].firstChild.value ;
+
+            }
+        }
 
         $('.title').html('Waste');
-        curStatus = "wasteBodega";
+        curStatus = "waste";
     });
   
     $('#wasteBodegaList').click(function(){
@@ -101,8 +110,22 @@ $(document).ready(function(){
         $('.addCompra').css('display', 'none');
         $('.retiroProduccion').css('display', 'none');
         $('.wasteBodegaList').css('display', 'block');
-
+        $('#tablaWaste').html('');
         $('.title').html('WasteList');
+
+        curStatus = "listWaste";
+        var now = new Date;
+        var ano = now.getFullYear();
+        var mes = now.getMonth() + 1;
+
+        $.ajax({
+            type: "POST",
+            url: "data/consultasBodega.php",
+            data: {sector: sector, ano: ano, mes: mes, curStatus: curStatus},
+            success: function(r){
+                $('#tablaWaste').append(r);
+            }
+        });
         curStatus = "wasteBodegaList";
     });
 

@@ -136,8 +136,7 @@
 
         case 'listWaste':
             $sector = ($_POST['sector'] == 'bodega') ? 1 : 2;
-            $idCategoria = $_POST['idCategoria'];
-            $año = $_POST['año'];
+            $ano = $_POST['ano'];
             $mes = $_POST['mes'];
         
             $sql = "SELECT c.nombre AS categoria, it.nombre AS item, SUM(r.cantidad) AS cantidad
@@ -149,8 +148,7 @@
                 LEFT JOIN registro_bodega AS r ON t.id_tenencia = r.id_tenencia
                 WHERE r.id_tipo_registro = 3
                 AND it.id_tipo_item = '$sector'
-                AND c.id_categoria_item = '$idCategoria'
-                AND YEAR(t.fecha) = '$año'
+                AND YEAR(t.fecha) = '$ano'
                 AND MONTH(t.fecha) = '$mes'
                 GROUP BY it.nombre
                 ORDER BY c.nombre, it.nombre ASC";
