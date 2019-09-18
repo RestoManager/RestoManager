@@ -1,6 +1,7 @@
 
 var curStatus = "";
 var sector = "bodega";
+var tenencia;
 $(document).ready(function(){
     $('.listItems').css('display', 'none');   
     $('.addCompra').css('display', 'none');
@@ -15,6 +16,7 @@ $(document).ready(function(){
         curStatus = "listCategoria";
         
         $('#selectCat').html('');
+        $('#tablaItems').html('');
         $.ajax({
             type: "POST",
             url: "data/consultasBodega.php",
@@ -35,6 +37,8 @@ $(document).ready(function(){
           
     });
 
+    // muestra tabla de las compras por llegar
+
     $('#addComprar').click(function(){
 
         $('.listItems').css('display', 'none');
@@ -53,6 +57,8 @@ $(document).ready(function(){
             }
         });
 
+        tablas = document.getElementById('tablaCompras');
+
 
     });
 
@@ -64,7 +70,18 @@ $(document).ready(function(){
         $('.wasteBodegaList').css('display', 'none');
 
         $('.title').html('Retiro a Produccion');
-        curStatus = "retiroProduccion";
+        curStatus = "retiroBodega";
+
+        for(i=0; i< tablas.rows.length; i++){
+            let col = tablas.rows[i].getElementsByTagName('td');
+
+            if(col[4].firstChild.checked){
+                $('#nItem').val(col[0].innerHTML);
+                $('#disponible').val(col[3].innerHTML);
+                tenencia = col[4].firstChild.value ;
+
+            }
+        }
 
     });
 
@@ -73,6 +90,7 @@ $(document).ready(function(){
         $('.addCompra').css('display', 'none');
         $('.retiroProduccion').css('display', 'block');
         $('.wasteBodegaList').css('display', 'none');
+
 
         $('.title').html('Waste');
         curStatus = "wasteBodega";

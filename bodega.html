@@ -37,7 +37,7 @@
 
             </div>
     
-            <div class="container">
+            <div class="container tablillas">
 
                 <table class="table" >
                     <thead>
@@ -49,7 +49,7 @@
                             <th>Select</th>
                         </tr>
                     </thead>
-                    <tbody id="tablaItems" >
+                    <tbody id="tablaItems">
                         <tr>
                             <td>sleccione</td>
                             <td>una</td>
@@ -73,7 +73,7 @@
        
         <div class="container addCompra mt-2 container-block">
 
-            <div class="container">
+            <div class="container tablillas">
                 <table class="table" >
                         <thead>
                             <tr>
@@ -93,15 +93,19 @@
                         </tbody>
                     </table>
             </div>
+            <input type="number" name="" id="cantidadEntrada" placeholder="Cuanto llegó">
+            <button id="agregarCompra">Agregar a bodega</button>
         
         </div>
 
         <div class="retiroProduccion container mt-2 container-block">
 
-                <select name="selectCat3" id="selectCat3" class="form-control"></select>
-                <select name="selectItem2" id="selectItem2" class="form-control"></select>
+             <label for=""> Item </label>   
+            <input type="text" class="form-control" id="nItem" disabled> 
+            <label for="">Quedan</label>
+            <input type="text" class="form-control" id="disponible" disabled>   
                 <input type="number" placeholder="Cantidad" name="cantidad2" id="cantidad2" class="form-control">
-                <button class="btn btn-danget" id="enviarRetiro">Enviar</button>
+                <button class="btn btn-danger" id="enviarRetiro">Enviar</button>
 
         </div>
 
