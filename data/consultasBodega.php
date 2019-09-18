@@ -113,7 +113,7 @@
             $cantidad = $_POST['cantidad'];
         
             $sql = "INSERT INTO registro_bodega (cantidad, en_inventario, hora, id_tenencia, id_tipo_registro)
-                VALUES ('$cantidad', '$cantidad', CURTIME(), '$idTenencia', 1)";
+                VALUES ('$cantidad', '$cantidad', NOW(), '$idTenencia', 1)";
 
             mysqli_query($conexion, $sql);
 
@@ -127,7 +127,7 @@
             $sql = "INSERT INTO registro_bodega (cantidad, en_inventario, hora, id_tenencia, id_tipo_registro)
                 VALUES ('$cantidad', 
                     (SELECT r.en_inventario FROM registro_bodega AS r WHERE r.id_tenencia = '$idTenencia' ORDER BY r.id_registro_bodega DESC LIMIT 1) - '$cantidad',
-                    CURTIME(), '$idTenencia', 3)";
+                    NOW(), '$idTenencia', 3)";
 
             mysqli_query($conexion, $sql);
 
@@ -173,7 +173,7 @@
             $sql = "INSERT INTO registro_bodega (cantidad, en_inventario, hora, id_tenencia, id_tipo_registro)
                 VALUES ('$cantidad', 
                 (SELECT r.en_inventario FROM registro_bodega AS r WHERE r.id_tenencia = '$idTenencia' ORDER BY r.id_registro_bodega DESC LIMIT 1) - '$cantidad',
-                CURTIME(), '$idTenencia', 2)";
+                NOW(), '$idTenencia', 2)";
             
             mysqli_query($conexion, $sql);
 
