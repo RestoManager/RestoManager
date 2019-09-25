@@ -13,3 +13,24 @@
     overflow-y: auto;
     height: 400px;
 }
+
+#firma{
+    height: 300px;
+    width: 300px;
+    border: solid 1px black;
+}
+
+.firmachica{
+    height: 30px;
+    width: 30px;
+
+}
+#firmachica{
+    height: 60px;
+    width: 60px;
+
+}
+td{
+    height: 30px;
+    width: 30px;
+}
