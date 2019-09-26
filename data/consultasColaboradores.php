@@ -66,22 +66,43 @@
                 INNER JOIN turno AS t ON h.id_turno = t.id_turno
                 INNER JOIN cargo AS c ON h.id_cargo = c.id_cargo
                 INNER JOIN colaborador_cargo AS nub ON h.id_colaborador = nub.id_colaborador 
-                WHERE 
+                WHERE h.id_colaborador = '$idColaborador'
                 ORDER BY h.semana, d.id_dia, h.hora_entrada";
             
             $result = mysqli_query($conexion, $sql);
 
-            $fila = mysqli_fetch_row($result);
-            $dia = ($fila[0] == 0 ? 0 : 7) + $fila[1];
-            for ($i = 1; $i <= 14; $i++) {
-                if ($dia == $i) {
-                    echo '<tr><td>'.$fila[0].'</td><td>'.utf8_encode($fila[2]).'</td><td>'.utf8_encode($fila[3]).'</td><td>'.$fila[4].'</td><td>'.$fila[5].'</td><td>'.utf8_encode($fila[6]).'</td><td><input type="radio" name="tursel" value='.$i.'></td></tr>';
-                    $fila = mysqli_fetch_row($result);
-                    $dia = ($fila[0] == 0 ? 0 : 7) + $fila[1];
-                } else {
-                    echo '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input type="radio" name="tursel" value='.$i + $j.'></td></tr>';
+            $fila = mysqli_fetch_row($result) ?? [0, 0];
+            for ($i=0; $i < 2; $i++) {
+                echo '<div class="title">Semana'.($i + 1).'</div>';
+                for ($j = 1; $j <= 7; $j++) {
+                    if ($fila[0] == $i && $fila[1] == j) {
+                        echo '<tr>
+                                <td>'.$fila[0].'</td>
+                                <td>'.utf8_encode($fila[2]).'</td>
+                                <td>'.utf8_encode($fila[3]).'</td>
+                                <td>'.$fila[4].'</td>
+                                <td>'.$fila[5].'</td>
+                                <td>'.utf8_encode($fila[6]).'</td>
+                                <td><button class="btn btn-danger" onclick="modHorario('.$i.', '.$j.')">+</button></td>
+                            </tr>';
+                        $fila = mysqli_fetch_row($result);
+                    } else {
+                        echo '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="btn btn-danger" onclick="modHorario('.$i.', '.$j.')">+</button></td></tr>';
+                    }
                 }
             }
+
+            // $dia = ($fila[0] == 0 ? 0 : 7) + $fila[1];
+            // for ($i = 1; $i <= 14; $i++) {
+            //     if ($dia == $i) {
+            //         echo '<tr><td>'.$fila[0].'</td><td>'.utf8_encode($fila[2]).'</td><td>'.utf8_encode($fila[3]).'</td><td>'.$fila[4].'</td><td>'.$fila[5].'</td><td>'.utf8_encode($fila[6]).'</td><td><input type="radio" name="tursel" value='.$i.'></td></tr>';
+            //         $fila = mysqli_fetch_row($result);
+            //         $dia = ($fila[0] == 0 ? 0 : 7) + $fila[1];
+            //     } else {
+            //         echo '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input type="radio" name="tursel" value='.$i + $j.'></td></tr>';
+            //     }
+            // }
+
             break;
 
 
