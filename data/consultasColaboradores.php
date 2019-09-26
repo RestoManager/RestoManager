@@ -57,7 +57,7 @@
             $sql = "";
             if ($idTurno > 0) {
                 $sql = "INSERT INTO horario (id_colaborador, semana, id_dia, id_turno, hora_entrada, hora_salida, id_cargo)
-                VALUES ('$idColaborador', '$semana', '$idDia', '$idTurno', '$horaIn', '$horaOut', '$idCargo)
+                VALUES ('$idColaborador', '$semana', '$idDia', '$idTurno', '$horaIn', '$horaOut', '$idCargo')
                 ON DUPLICATE KEY UPDATE id_turno = '$idTurno', hora_entrada = '$horaIn', hora_salida = '$horaOut', id_cargo = '$idCargo'";
             } else {
                 $sql = "DELETE FROM horario WHERE (id_colaborador, semana, id_dia) = ('$idColaborador', '$semana', '$idDia')";
@@ -85,7 +85,8 @@
             $fila = mysqli_fetch_row($result) ?? [0, 0];
             $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
             for ($i=0; $i < 2; $i++) {
-                echo '<div class="title">Semana'.($i + 1).'</div>
+                echo '<div class="title">Semana '.($i + 1).'</div>
+                    <table class="table">
                     <tr>
                         <th>Día</th>
                         <th>Turno</th>
@@ -96,12 +97,13 @@
                     </tr>';
                 for ($j = 1; $j <= 7; $j++) {
                     echo '<tr><td>'.$dias[$j - 1].'</td>';
-                    if ($fila[0] == $i && $fila[1] == j) {
+                    if ($fila[0] == $i && $fila[1] == $j) {
                         echo '<td>'.utf8_encode($fila[2]).'</td>
                             <td>'.$fila[3].'</td>
                             <td>'.$fila[4].'</td>
                             <td>'.utf8_encode($fila[5]).'</td>
-                            <td><button class="btn btn-danger modificarTurno" onclick="modHorario('.$i.', '.$j.', )">+</button></td>
+                            <td><button class="btn btn-danger modificarTurno"
+                                onclick="modHorario('.$i.', '.$j.')">+</button></td>
                             </tr>';
                         $fila = mysqli_fetch_row($result);
                     } else {
@@ -113,8 +115,14 @@
                             </tr>';
                     }
                 }
+                echo '</table>';
             }
             break;
+
+
+        case 'verAsistencia':
+            $idColaborador = $_POST['idColaborador'];
+            $sql = "SELECT fecha_hora, ";
 
 
         /*  LIST  */
@@ -176,12 +184,4 @@
             }
             break;
     }
-
-                /* boceto consulta trabajador:
-
-                $sql = "SELECT car.id_cargo,
-                CONCAT(col.nombre, ' ', col.apellido_paterno, ' ', col.apellido materno) AS nombre,
-                car.nombre AS cargo FROM colaborador AS col INNER JOIN colaborador_cargo AS nub INNER JOIN cargo AS car
-                WHERE col.id_colaborador = nub.id_colaborador AND car.id_cargo = nub.id_cargo";
-                */
 ?>
