@@ -1,6 +1,8 @@
+var status = "";
 $(document).ready(function(){
 
     $('#show-reg-user').click(function(){
+        status = "addColaborador";
         $('.RegUser').css('display', 'block');
         $('.AsignarCargo').css('display', 'none');
         $('.RegistroAsistencia').css('display', 'none');
@@ -15,6 +17,27 @@ $(document).ready(function(){
         $('.RegistroAsistencia').css('display', 'none');
         $('.asistencia').css('display', 'none');
         $('.modificarHorario').css('display','none');
+        status = 'listColaborador';
+
+        $.ajax({
+            type: "POST",
+            url: "data/consultasColaboradores.php",
+            data: {curStatus: status},
+            success: function(r){
+                $('#nameColaborador').html(r);
+            }
+        });
+
+        status = 'listCargo';
+
+        $.ajax({
+            type: "POST",
+            url: "data/consultasColaboradores.php",
+            data: {curStatus: status},
+            success: function(r){
+                $('#nameCargo').html(r);
+            }
+        });
 
 
     });

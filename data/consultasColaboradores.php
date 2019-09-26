@@ -6,11 +6,11 @@
         /*  INSERTS  */
 
         case 'addColaborador':
-            $rut = $_POST['rut'];
-            $nombre = $_POST['nombre'];
-            $apellidoP = $_POST['apellidoP'];
-            $apellidoM = $_POST['apellidoM'];
-            $correo = $_POST['correo'];
+            $nombre = $_POST['user_name'];
+            $apellidoP = $_POST['user_apellido_paterno'];
+            $apellidoM = $_POST['user_apellido_materno'];
+            $rut = $_POST['user_rut'];
+            $correo = $_POST['user_mail'];
 
             $sql = "INSERT INTO colaborador (rut, nombre, apellido_paterno, apellido_materno, correo)
                 VALUES ('$rut', '$nombre', '$apellidoP', '$apellidoM', '$correo')";

@@ -1,28 +1,12 @@
 $(document).ready(function(){
 
-    $('#enviarNewUser').click(function(){
-
-        var data = $('#registro_user').serialize();
-        $.ajax({
-            type: "POST",
-            url: "",
-            data: data,
-            succes: function(){
-                alert('BIEN HECHO');
-            }
-        });
+    $('.modificarTurno').click(function(){
+        $('#modTurno').css('display', 'block');
     });
 
-
-
-
-
-
-
-
-
-
-
+    $('#cancelMod').click(function(){
+        $('#modTurno').css('display', 'none');
+    });
 
 
 
