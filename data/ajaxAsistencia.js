@@ -42,6 +42,26 @@ $(document).ready(function(){
 
     });
 
+    $('#nameColaborador2').change(function(){
+        status = "verHorario";
+        var idCol = this.value;
+        $('#tablaHorario').html('');
+
+        $.ajax({
+            type: "POST",
+            url: "data/consultasColaboradores.php",
+            data: {curStatus: status, idColaborador: idCol},
+            success: function(r){
+                $('#tablaHorario').html(r);
+            }
+
+
+        });
+
+    });
+
+    
+
 
 
 
@@ -56,3 +76,19 @@ $(document).ready(function(){
 
 
 });
+
+function modHorario(semana, idDia, idFila){
+    let week = semana;
+    let day = idDia;
+    let fila = idFila;
+    status = "listCargo";
+
+    $.ajax({
+        type: "POST",
+        url: "data/consultasColaboradores.php",
+        data: {curStatus: status},
+        success: function(r){
+            $('#nameCargo2').html(r);
+        }
+    });
+}

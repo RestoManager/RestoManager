@@ -89,6 +89,18 @@ $(document).ready(function(){
         $('.asistencia').css('display', 'none');
         $('.modificarHorario').css('display','block');
 
+        status = "listColaborador";
+        $.ajax({
+            type: "POST",
+            url: "data/consultasColaboradores.php",
+            data: {curStatus: status},
+            success: function(r){
+                $('#nameColaborador2').html(r);
+            }
+
+
+        });
+
     });
 
 
