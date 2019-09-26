@@ -23,7 +23,6 @@
             $result = mysqli_query($conexion,$sql);
             
             echo '<option value= 0> Seleccione Item </option>';
-
             while($fila = mysqli_fetch_row($result)){
                 echo '<option value='.$fila[0].'>'.utf8_encode($fila[1]).'</option>';
             }
@@ -55,7 +54,6 @@
             $result = mysqli_query($conexion, $sql);
         
             echo '<tr>';
-            
             while($fila = mysqli_fetch_row($result)){
                 echo '<td>'.utf8_encode($fila[1]).'</td><td>'.$fila[2].'</td><td>'.$fila[3].'</td><td>'.$fila[4].'</td><td><input type="radio" name="itemsel" value='.$fila[5].'></td></tr>';
             }
@@ -72,7 +70,6 @@
                 VALUES ('$costo', '$cantidad', CURDATE(), '$idItem')";
             
             mysqli_query($conexion, $sql);
-
             break;
 
         
@@ -83,7 +80,6 @@
             $sql = "INSERT INTO tenencia (cantidad, fecha, id_item) VALUES ('$cantidad', CURDATE(), '$idItem')";
             
             mysqli_query($conexion, $sql);
-
             break;
 
         case 'addTenencia':
@@ -100,7 +96,6 @@
             $result = mysqli_query($conexion, $sql);
         
             echo '<tr>';
-            
             while($fila = mysqli_fetch_row($result)){
                 echo '<td>'.utf8_encode($fila[0]).'</td><td>'.$fila[2].'</td><td>'.$fila[1].'</td><td><input type="radio" name="itemsel" value='.$fila[3].'></td></tr>';
             }
@@ -116,7 +111,6 @@
                 VALUES ('$cantidad', '$cantidad', NOW(), '$idTenencia', 1)";
 
             mysqli_query($conexion, $sql);
-
             break;
 
 
@@ -130,7 +124,6 @@
                     NOW(), '$idTenencia', 3)";
 
             mysqli_query($conexion, $sql);
-
             break;
 
 
@@ -139,7 +132,7 @@
             $ano = $_POST['ano'];
             $mes = $_POST['mes'];
         
-            $sql = "SELECT c.nombre AS categoria, it.nombre AS item, SUM(r.cantidad) AS cantidad
+            $sql = "SELECT c.nombre AS categoria, it.nombre AS item, CONCAT(SUM(r.cantidad), ' ', u.unidad) AS cantidad
                 FROM tenencia AS t
                 INNER JOIN item AS it ON t.id_item = it.id_item
                 INNER JOIN categoria_item AS c ON it.id_categoria_item = c.id_categoria_item
@@ -156,7 +149,6 @@
             $result = mysqli_query($conexion, $sql);
         
             echo '<tr>';
-            
             while($fila = mysqli_fetch_row($result)){
                 echo '<td>'.utf8_encode($fila[1]).'</td><td>'.$fila[2].'</td><td>'.$fila[3].'</td></tr>';
             }
@@ -174,7 +166,79 @@
                 NOW(), '$idTenencia', 2)";
             
             mysqli_query($conexion, $sql);
+            break;
 
+
+        case 'listTipo':
+            $sql = "SELECT * FROM tipo_item";
+            $result = mysqli_query($conexion,$sql);
+            
+            echo '<option value= 0 > Seleccione tipo de ítem </option>';
+            while($fila = mysqli_fetch_row($result)){
+                echo '<option value='.$fila[0].'>'.utf8_encode($fila[1]).'</option>';
+            }
+
+            break;
+
+
+        case 'listUnidad':
+            $sql = "SELECT * FROM unidad";
+            $result = mysqli_query($conexion,$sql);
+            
+            echo '<option value= 0 > Seleccione unidad </option>';
+            while($fila = mysqli_fetch_row($result)){
+                echo '<option value='.$fila[0].'>'.utf8_encode($fila[1]).'</option>';
+            }
+
+            break;
+        
+        
+        case 'addItem':
+            $nombre = $_POST['nombre'];
+            $duracion = $_POST['duracion'];
+            $idTipo = $_POST['idTipo'];
+            $idCategoria = $_POST['idCategoria'];
+            $idUnidad = $_POST['idUnidad'];
+
+            $sql = "INSERT INTO item (nombre, duracion_dias, id_tipo_item, id_categoria_item, id_unidad)
+                VALUES ('$nombre', '$duracion', '$idTipo', '$idCategoria', '$idUnidad')";
+
+            mysqli_query($conexion, $sql);
+            break;
+
+
+        case 'addCategoria':
+            $nombre = $_POST['nombre'];
+            $sql = "INSERT INTO categoria_item (nombre) VALUES ('$nombre')";
+            mysqli_query($conexion, $sql);
+            break;
+
+
+        case 'addTipoItem':
+            $nombre = $_POST['nombre'];
+            $sql = "INSERT INTO tipo_item (nombre) VALUES ('$nombre')";
+            mysqli_query($conexion, $sql);
+            break;
+        
+
+        case 'rmTenencia':
+            $idTenencia = $_POST['idTenencia'];
+            $sql = "DELETE FROM tenencia WHERE id_tenencia = '$idTenencia'";
+            mysqli_query($conexion, $sql);
+            break;
+        
+
+        case 'rmItem':
+            $idItem = $_POST['idItem'];
+            $sql = "DELETE FROM item WHERE id_item = '$idItem'";
+            mysqli_query($conexion, $sql);
+            break;
+        
+
+        case 'rmCategoria':
+            $idCategoria = $_POST['idCategoria'];
+            $sql = "DELETE FROM categoria WHERE id_categoria = '$idCategoria'";
+            mysqli_query($conexion, $sql);
             break;
     }
 ?>
