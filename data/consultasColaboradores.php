@@ -83,11 +83,13 @@
             $result = mysqli_query($conexion, $sql);
 
             $fila = mysqli_fetch_row($result) ?? [0, 0];
+            $idFila = 0;
             for ($i=0; $i < 2; $i++) {
                 echo '<div class="title">Semana'.($i + 1).'</div>';
                 for ($j = 1; $j <= 7; $j++) {
+                    $idFila++;
                     if ($fila[0] == $i && $fila[1] == j) {
-                        echo '<tr>
+                        echo '<tr id="fila'.$idFila.'">
                                 <td>'.$fila[0].'</td>
                                 <td>'.utf8_encode($fila[2]).'</td>
                                 <td>'.utf8_encode($fila[3]).'</td>
@@ -98,7 +100,7 @@
                             </tr>';
                         $fila = mysqli_fetch_row($result);
                     } else {
-                        echo '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="btn btn-danger" onclick="modHorario('.$i.', '.$j.')">+</button></td></tr>';
+                        echo '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="btn btn-danger" onclick="modHorario('.$i.', '.$j.', '.$idFila.')">+</button></td></tr>';
                     }
                 }
             }
