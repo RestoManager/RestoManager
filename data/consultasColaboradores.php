@@ -71,7 +71,7 @@
 
         case 'verHorario':
             $idColaborador = $_POST['idColaborador'];
-            $sql = "SELECT h.semana, d.id_dia, d.nombre, t.nombre, h.hora_entrada, h.hora_salida, c.nombre
+            $sql = "SELECT h.semana, d.id_dia, t.nombre, h.hora_entrada, h.hora_salida, c.nombre
                 FROM horario AS h
                 INNER JOIN dia AS d ON h.id_dia = d.id_dia
                 INNER JOIN turno AS t ON h.id_turno = t.id_turno
@@ -83,24 +83,34 @@
             $result = mysqli_query($conexion, $sql);
 
             $fila = mysqli_fetch_row($result) ?? [0, 0];
-            $idFila = 0;
+            $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
             for ($i=0; $i < 2; $i++) {
-                echo '<div class="title">Semana'.($i + 1).'</div>';
+                echo '<div class="title">Semana'.($i + 1).'</div>
+                    <tr>
+                        <th>Día</th>
+                        <th>Turno</th>
+                        <th>Entrada</th>
+                        <th>Salida</th>
+                        <th>Cargo</th>
+                        <th>Modificar</th>
+                    </tr>';
                 for ($j = 1; $j <= 7; $j++) {
-                    $idFila++;
+                    echo '<tr><td>'.$dias[$j - 1].'</td>';
                     if ($fila[0] == $i && $fila[1] == j) {
-                        echo '<tr id="fila'.$idFila.'">
-                                <td>'.$fila[0].'</td>
-                                <td>'.utf8_encode($fila[2]).'</td>
-                                <td>'.utf8_encode($fila[3]).'</td>
-                                <td>'.$fila[4].'</td>
-                                <td>'.$fila[5].'</td>
-                                <td>'.utf8_encode($fila[6]).'</td>
-                                <td><button class="btn btn-danger" onclick="modHorario('.$i.', '.$j.')">+</button></td>
+                        echo '<td>'.utf8_encode($fila[2]).'</td>
+                            <td>'.$fila[3].'</td>
+                            <td>'.$fila[4].'</td>
+                            <td>'.utf8_encode($fila[5]).'</td>
+                            <td><button class="btn btn-danger modificarTurno" onclick="modHorario('.$i.', '.$j.', )">+</button></td>
                             </tr>';
                         $fila = mysqli_fetch_row($result);
                     } else {
-                        echo '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="btn btn-danger" onclick="modHorario('.$i.', '.$j.', '.$idFila.')">+</button></td></tr>';
+                        echo '<td>---</td>
+                            <td>---</td>
+                            <td>---</td>
+                            <td>---</td>
+                            <td><button class="btn btn-danger modificarTurno" onclick="modHorario('.$i.', '.$j.')">+</button></td>
+                            </tr>';
                     }
                 }
             }
