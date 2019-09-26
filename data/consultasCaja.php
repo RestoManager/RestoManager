@@ -13,7 +13,7 @@
 
 
         case 'addTotal':
-            $compra = $_POST['compra'];
+            $total = $_POST['total'];
             $propina = $_POST['propina'];
             $mesa = $_POST['mesa'];
             $metodoPago = $_POST['metodoPago'];
@@ -24,5 +24,10 @@
             
             mysqli_query($conexion, $sql);
             break;
+
+
+        /*  MANTENCIÓN DB  */        
+
+        
     }
 ?>

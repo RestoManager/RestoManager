@@ -30,19 +30,6 @@
             break;
 
 
-        case 'addHorario':
-            $idColaborador = $_POST['$idColaborador'];
-            $dia = $_POST['dia'];
-            $semana = $dia > 7 ? 1 : 0;
-            $idDia = $dia % 7;
-            $idTurno = $_POST['idTurno'];
-            $horaIn = $_POST['horaIn'];
-            $horaOut = $_POST['horaOut'];
-
-            $sql = "INSERT INTO horario (id_colaborador, semana, id_dia, id_turno, hora_entrada, hora_salida)
-                VALUES ('$idColaborador', '$semana', '$idDia', '$idTurno', '$horaIn', '$horaOut')";
-
-
         case 'registroAsistencia':
             $idColaborador = $_POST['idColaborador'];
             $tipo = $_POST['tipo'];
@@ -51,6 +38,30 @@
 
             $sql = "INSERT INTO asistencia (id_colaborador, fecha_hora, tipo, id_turno, id_cargo)
                 VALUES ('$idColaborador', NOW(), '$tipo', '$idTurno', '$idCargo')";
+
+            mysqli_query($conexion, $sql);
+            break;
+
+
+        /*  UPDATE  */
+
+        case 'modHorario':
+            $idColaborador = $_POST['idColaborador'];
+            $semana = $_POST['semana'];
+            $idDia = $_POST['idDia'];
+            $idTurno = $_POST['idTurno'];
+            $horaIn = $_POST['horaIn'];
+            $horaOut = $_POST['horaOut'];
+            $idCargo = $_POST['idCargo'];
+
+            $sql = "";
+            if ($idTurno > 0) {
+                $sql = "INSERT INTO horario (id_colaborador, semana, id_dia, id_turno, hora_entrada, hora_salida, id_cargo)
+                VALUES ('$idColaborador', '$semana', '$idDia', '$idTurno', '$horaIn', '$horaOut', '$idCargo)
+                ON DUPLICATE KEY UPDATE id_turno = '$idTurno', hora_entrada = '$horaIn', hora_salida = '$horaOut', id_cargo = '$idCargo'";
+            } else {
+                $sql = "DELETE FROM horario WHERE (id_colaborador, semana, id_dia) = ('$idColaborador', '$semana', '$idDia')";
+            }
 
             mysqli_query($conexion, $sql);
             break;
@@ -66,20 +77,31 @@
                 INNER JOIN turno AS t ON h.id_turno = t.id_turno
                 INNER JOIN cargo AS c ON h.id_cargo = c.id_cargo
                 INNER JOIN colaborador_cargo AS nub ON h.id_colaborador = nub.id_colaborador 
-                WHERE 
+                WHERE h.id_colaborador = '$idColaborador'
                 ORDER BY h.semana, d.id_dia, h.hora_entrada";
             
             $result = mysqli_query($conexion, $sql);
 
-            $fila = mysqli_fetch_row($result);
-            $dia = ($fila[0] == 0 ? 0 : 7) + $fila[1];
-            for ($i = 1; $i <= 14; $i++) {
-                if ($dia == $i) {
-                    echo '<tr><td>'.$fila[0].'</td><td>'.utf8_encode($fila[2]).'</td><td>'.utf8_encode($fila[3]).'</td><td>'.$fila[4].'</td><td>'.$fila[5].'</td><td>'.utf8_encode($fila[6]).'</td><td><input type="radio" name="tursel" value='.$i.'></td></tr>';
-                    $fila = mysqli_fetch_row($result);
-                    $dia = ($fila[0] == 0 ? 0 : 7) + $fila[1];
-                } else {
-                    echo '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input type="radio" name="tursel" value='.$i + $j.'></td></tr>';
+            $fila = mysqli_fetch_row($result) ?? [0, 0];
+            $idFila = 0;
+            for ($i=0; $i < 2; $i++) {
+                echo '<div class="title">Semana'.($i + 1).'</div>';
+                for ($j = 1; $j <= 7; $j++) {
+                    $idFila++;
+                    if ($fila[0] == $i && $fila[1] == j) {
+                        echo '<tr id="fila'.$idFila.'">
+                                <td>'.$fila[0].'</td>
+                                <td>'.utf8_encode($fila[2]).'</td>
+                                <td>'.utf8_encode($fila[3]).'</td>
+                                <td>'.$fila[4].'</td>
+                                <td>'.$fila[5].'</td>
+                                <td>'.utf8_encode($fila[6]).'</td>
+                                <td><button class="btn btn-danger" onclick="modHorario('.$i.', '.$j.')">+</button></td>
+                            </tr>';
+                        $fila = mysqli_fetch_row($result);
+                    } else {
+                        echo '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="btn btn-danger" onclick="modHorario('.$i.', '.$j.', '.$idFila.')">+</button></td></tr>';
+                    }
                 }
             }
             break;
@@ -88,7 +110,7 @@
         /*  LIST  */
 
         case 'listColaborador':
-            $sql = "SELECT id_colaborador, nombre FROM colaborador";
+            $sql = "SELECT id_colaborador, CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) AS colaborador FROM colaborador";
             $result = mysqli_query($conexion, $sql);
             
             echo '<option value= 0> Seleccione Colaborador </option>';
