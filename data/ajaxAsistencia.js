@@ -1,3 +1,5 @@
+var idWeek = 0;
+var idDay = 0;
 $(document).ready(function(){
 
     $('#enviarNewUser').click(function(){
@@ -58,10 +60,41 @@ $(document).ready(function(){
 
         });
 
+
     });
 
     
+    $('#enviarModHorario').click(function(){
+        status = "modHorario";
+        var horaEntrada = $('#horaEntrada').val();
+        var horaSalida = $('#horaSalida').val();
+        var Cargo = $('#nameCargo2').val();
+        var Turno = $('#nameTurno').val();
+        var idCol = $('#nameColaborador2').val();
 
+        $.ajax({
+            type: "POST",
+            url: "data/consultasColaboradores.php",
+            data: {
+                curStatus: status,
+                idColaborador: idCol,
+                semana: idWeek,
+                idDia: idDay,
+                idTurno: Turno,
+                horaIn: horaEntrada,
+                horaOut: horaSalida,
+                idCargo: Cargo
+            },
+            success: function(){
+                alert('horario Modificado exitosamente!');
+            }
+        });
+
+        $('#show-modificar-horario').click();
+
+
+
+    });
 
 
 
@@ -77,18 +110,32 @@ $(document).ready(function(){
 
 });
 
-function modHorario(semana, idDia, idFila){
-    let week = semana;
-    let day = idDia;
-    let fila = idFila;
-    status = "listCargo";
+function modHorario(semana, idDia){
+    idWeek = semana;
+    idDay = idDia;
+    
+    
 
+    $('#modTurno').css('display', 'block');
+    status = "listCargoColaborador";
+    var idCol = $('#nameColaborador2').val();
+    $.ajax({
+        type: "POST",
+        url: "data/consultasColaboradores.php",
+        data: {curStatus: status, idColaborador: idCol},
+        success: function(r){
+            $('#nameCargo2').html(r);
+        }
+    });
+    status = "listTurno";
     $.ajax({
         type: "POST",
         url: "data/consultasColaboradores.php",
         data: {curStatus: status},
         success: function(r){
-            $('#nameCargo2').html(r);
+            $('#nameTurno').html(r);
         }
     });
+
+
 }

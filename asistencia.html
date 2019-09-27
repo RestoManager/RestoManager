@@ -150,48 +150,8 @@
                                 </select>
                         </div>
                         
-                            <div class="container ">
-                                <div class="title">Semana1</div>
-
-                                <table class="table">
-                                    <tr>
-                                        <th>Dia</th>
-                                        <th>Entrada</th>
-                                        <th>Salida</th>
-                                        <th>Turno</th>
-                                        <th>Cargo</th>
-                                        <th>Modificar</th>
-                                    </tr>
-                                    <tbody id="tablaHorario">
-                                        <tr>
-                                            <td>Lunes</td>
-                                            <td>09:00</td>
-                                            <td>18:00</td>
-                                            <td>Mañana</td>
-                                            <td>Copero</td>
-                                            <td><button class="btn btn-danger modificarTurno" id="modificarTurno" onclick="modHorario(1,2,3)">+</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="title">Semana2</div>
-                                <table class="table">
-                                        <tr>
-                                            <th>Dia</th>
-                                            <th>Entrada</th>
-                                            <th>Salida</th>
-                                            <th>Turno</th>
-                                            <th>Modificar</th>
-                                        </tr>
-                                        <tbody>
-                                            <tr>
-                                                <td>Lunes</td>
-                                                <td>09:00</td>
-                                                <td>18:00</td>
-                                                <td>Mañana</td>
-                                                <td><button class="btn btn-danger modificarTurno" id="modificarTurno" value="chao">+</button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="container" id="tablaHorario">
+                                
                             </div>
                           
                                 <div class="window"style="border: black solid 3px" id="modTurno">
@@ -203,11 +163,11 @@
                                         <option value="">Cargo</option>
                                     </select>
                                     <label for="entrada">Entrada</label>
-                                    <input type="time" name="entrada" id="" class="form-control" >
+                                    <input type="time" name="entrada" id="horaEntrada" class="form-control" >
                                     <label for="salida">Salida</label>
-                                    <input type="time" name="salida" class="form-control">
+                                    <input type="time" name="salida" id="horaSalida" class="form-control">
 
-                                    <button class="btn btn-danger">Enviar</button>
+                                    <button class="btn btn-danger" id="enviarModHorario">Enviar</button>
                                     <button class="btn btn-danger">borrar</button>
                                     <button class="btn btn-danger" id="cancelMod">cancelar</button>
                                 </div>
