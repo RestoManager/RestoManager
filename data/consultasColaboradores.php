@@ -71,7 +71,7 @@
 
         case 'verHorario':
             $idColaborador = $_POST['idColaborador'];
-            $sql = "SELECT h.semana, d.id_dia, t.nombre, h.hora_entrada, h.hora_salida, c.nombre
+            $sql = "SELECT DISTINCT h.semana, d.id_dia, t.nombre, h.hora_entrada, h.hora_salida, c.nombre
                 FROM horario AS h
                 INNER JOIN dia AS d ON h.id_dia = d.id_dia
                 INNER JOIN turno AS t ON h.id_turno = t.id_turno
@@ -134,11 +134,11 @@
             $tipo = ['entrada', 'salida'];
             while($fila = mysqli_fetch_row($result)){
                 echo '<tr>
-                    <td>'.$fila[0].'</td>
-                    <td>'.tipo[$fila[1]].'</td>
-                    <td>'.$fila[2].'</td>
-                    <td>'.$fila[3].'</td>
-                    <td>'.$fila[4].'</td>
+                        <td>'.$fila[0].'</td>
+                        <td>'.tipo[$fila[1]].'</td>
+                        <td>'.$fila[2].'</td>
+                        <td>'.$fila[3].'</td>
+                        <td>'.$fila[4].'</td>
                     </tr>';
             }
             break;
