@@ -122,7 +122,26 @@
 
         case 'verAsistencia':
             $idColaborador = $_POST['idColaborador'];
-            $sql = "SELECT fecha_hora, ";
+            $mes = $_POST['mes'];
+            $sql = "SELECT DATE(a.fecha_hora) AS fecha, a.tipo, t.nombre, c.nombre, a.firma
+                FROM asistencia AS a
+                INNER JOIN turno AS t ON a.id_turno = t.id_turno
+                INNER JOIN cargo AS c ON a.id_cargo = c.id_cargo
+                WHERE a.id_colaborador = '$idColaborador' AND MONTH(fecha) = '$mes'
+                ORDER BY a.id_asistencia DESC";
+
+            $result = mysqli_query($conexion, $sql);
+            $tipo = ['entrada', 'salida'];
+            while($fila = mysqli_fetch_row($result)){
+                echo '<tr>
+                    <td>'.$fila[0].'</td>
+                    <td>'.tipo[$fila[1]].'</td>
+                    <td>'.$fila[2].'</td>
+                    <td>'.$fila[3].'</td>
+                    <td>'.$fila[4].'</td>
+                    </tr>';
+            }
+            break;
 
 
         /*  LIST  */
