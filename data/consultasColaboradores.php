@@ -1,5 +1,5 @@
 <?php
-    $conexion = mysqli_connect('localhost', 'cac52927', 'sW{EXpAvPG$3L:h', 'cac52927_Pruebas');
+    $mysqli = new mysqli('localhost', 'cac52927', 'sW{EXpAvPG$3L:h', 'cac52927_Pruebas');
     $status = $_POST['curStatus'];
 
     switch ($status) {
@@ -12,10 +12,8 @@
             $apellidoM = $_POST['apellidoM'];
             $correo = $_POST['correo'];
 
-            $sql = "INSERT INTO colaborador (rut, nombre, apellido_paterno, apellido_materno, correo)
-                VALUES ('$rut', '$nombre', '$apellidoP', '$apellidoM', '$correo')";
-
-            mysqli_query($conexion, $sql);
+            $mysqli->query("INSERT INTO colaborador (rut, nombre, apellido_paterno, apellido_materno, correo)
+                VALUES ('$rut', '$nombre', '$apellidoP', '$apellidoM', '$correo')");
             break;
 
 
@@ -23,10 +21,8 @@
             $idColaborador = $_POST['idColaborador'];
             $idCargo = $_POST['idCargo'];
 
-            $sql = "INSERT INTO colaborador_cargo (id_colaborador, id_cargo)
-                VALUES ('$idColaborador', '$idCargo')";
-
-            mysqli_query($conexion, $sql);
+            $mysqli->query("INSERT INTO colaborador_cargo (id_colaborador, id_cargo)
+                VALUES ('$idColaborador', '$idCargo')");
             break;
 
 
@@ -36,10 +32,8 @@
             $idTurno = $_POST['idTurno'];
             $idCargo = $_POST['idCargo'];
 
-            $sql = "INSERT INTO asistencia (id_colaborador, fecha_hora, tipo, id_turno, id_cargo)
-                VALUES ('$idColaborador', NOW(), '$tipo', '$idTurno', '$idCargo')";
-
-            mysqli_query($conexion, $sql);
+            $mysqli->query("INSERT INTO asistencia (id_colaborador, fecha_hora, tipo, id_turno, id_cargo)
+                VALUES ('$idColaborador', NOW(), '$tipo', '$idTurno', '$idCargo')");
             break;
 
 
@@ -54,16 +48,13 @@
             $horaOut = $_POST['horaOut'];
             $idCargo = $_POST['idCargo'];
 
-            $sql = "";
             if ($idTurno > 0) {
-                $sql = "INSERT INTO horario (id_colaborador, semana, id_dia, id_turno, hora_entrada, hora_salida, id_cargo)
+                $mysqli->query("INSERT INTO horario (id_colaborador, semana, id_dia, id_turno, hora_entrada, hora_salida, id_cargo)
                 VALUES ('$idColaborador', '$semana', '$idDia', '$idTurno', '$horaIn', '$horaOut', '$idCargo')
-                ON DUPLICATE KEY UPDATE id_turno = '$idTurno', hora_entrada = '$horaIn', hora_salida = '$horaOut', id_cargo = '$idCargo'";
+                ON DUPLICATE KEY UPDATE id_turno = '$idTurno', hora_entrada = '$horaIn', hora_salida = '$horaOut', id_cargo = '$idCargo'");
             } else {
-                $sql = "DELETE FROM horario WHERE (id_colaborador, semana, id_dia) = ('$idColaborador', '$semana', '$idDia')";
+                $mysqli->query("DELETE FROM horario WHERE (id_colaborador, semana, id_dia) = ('$idColaborador', '$semana', '$idDia')");
             }
-
-            mysqli_query($conexion, $sql);
             break;
 
 
@@ -71,18 +62,18 @@
 
         case 'verHorario':
             $idColaborador = $_POST['idColaborador'];
-            $sql = "SELECT DISTINCT h.semana, d.id_dia, t.nombre, h.hora_entrada, h.hora_salida, c.nombre
+            $mysqli->query("SELECT DISTINCT h.semana, d.id_dia, t.nombre, h.hora_entrada, h.hora_salida, c.nombre
                 FROM horario AS h
                 INNER JOIN dia AS d ON h.id_dia = d.id_dia
                 INNER JOIN turno AS t ON h.id_turno = t.id_turno
                 INNER JOIN cargo AS c ON h.id_cargo = c.id_cargo
                 INNER JOIN colaborador_cargo AS nub ON h.id_colaborador = nub.id_colaborador 
                 WHERE h.id_colaborador = '$idColaborador'
-                ORDER BY h.semana, d.id_dia, h.hora_entrada";
+                ORDER BY h.semana, d.id_dia, h.hora_entrada");
             
-            $result = mysqli_query($conexion, $sql);
+            $res = $mysqli->use_result();
 
-            $fila = mysqli_fetch_row($result) ?? [0, 0];
+            $fila = $res->fetch_array() ?? [0, 0];
             $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
             for ($i=0; $i < 2; $i++) {
                 echo '<div class="title">Semana '.($i + 1).'</div>
@@ -122,24 +113,54 @@
 
         case 'verAsistencia':
             $idColaborador = $_POST['idColaborador'];
+            $año = $_POST['año'];
             $mes = $_POST['mes'];
-            $sql = "SELECT DATE(a.fecha_hora) AS fecha, a.tipo, t.nombre, c.nombre, a.firma
+            $mysqli->query("SELECT a.fecha_hora AS fecha, a.semana, TIME(a.fecha_hora) AS hora, a.firma, a.tipo, c.nombre AS cargo, p.monto
                 FROM asistencia AS a
-                INNER JOIN turno AS t ON a.id_turno = t.id_turno
                 INNER JOIN cargo AS c ON a.id_cargo = c.id_cargo
+                INNER JOIN propinas AS p ON h.id_colaborador = p.id_colaborador
+                INNER JOIN cierre_caja AS cierre ON p.id_cierre_caja = cierre.id_cierre_caja
+                INNER JOIN apertura_caja AS apertura ON cierre.id_apertura_caja = apertura.id_apertura_caja
+                INNER JOIN venta_dia AS v ON apertura.id_apertura_caja = v.apertura_mañana OR apertura.id_apertura_caja = v.apertura_tarde
                 WHERE a.id_colaborador = '$idColaborador' AND MONTH(fecha) = '$mes'
-                ORDER BY a.id_asistencia DESC";
+                ORDER BY a.id_asistencia DESC");
 
-            $result = mysqli_query($conexion, $sql);
-            $tipo = ['entrada', 'salida'];
-            while($fila = mysqli_fetch_row($result)){
-                echo '<tr>
-                        <td>'.$fila[0].'</td>
-                        <td>'.tipo[$fila[1]].'</td>
-                        <td>'.$fila[2].'</td>
-                        <td>'.$fila[3].'</td>
-                        <td>'.$fila[4].'</td>
-                    </tr>';
+            $res = $mysqli->use_result();
+            $i = 0;
+            while($fila = $res->fetch_assoc()){
+                if ($fila['tipo'] == 0) {
+                    $fila{$i} = ['fecha' => $fila['fecha'], 'semana' => $fila['semana'], 'horaIn' => $fila['hora'], 'firmaIn' => $fila['firma']];
+                } else {
+                    $fila{$i} = ['horaOut' => $fila['hora'], 'firmaOut' => $fila['firma'], 'cargo' => $fila['cargo'], $fila['monto']];
+                    $i++;
+                }
+            }
+
+            $fecha = mktime(0, 0, 0, $mes, 1, $año);
+            $largoMes = date('t', $fecha);
+            $dias = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+
+            for ($i = 0, $j = 0; $i < $largoMes; $i++) { 
+                echo '<tr><td>'.$dias[date('w', $fecha)].' '.date('d', $fecha).'</td>';
+
+                if ($fecha == strtotime($fila{$j}['fecha'])) {
+                    $atraso;
+                    $hrsExtra;
+
+                    echo '<td>'.$fila{$j}['horaIn'].'</td>
+                        <td>'.$fila{$j}['firmaIn'].'</td>
+                        <td>'.$fila{$j}['horaOut'].'</td>
+                        <td>'.$fila{$j}['firmaOut'].'</td>
+                        <td>'.$fila{$j}['cargo'].'</td>
+                        <td>'.$atraso.'</td>
+                        <td>'.$hrsExtra.'</td>
+                        <td>'.$fila{$j}['monto'].'</td></tr>';
+                    $j++;
+                } else {
+                    # code...
+                }
+
+                $fecha = strtotime('+1 day', $fecha);
             }
             break;
 
@@ -147,22 +168,22 @@
         /*  LIST  */
 
         case 'listColaborador':
-            $sql = "SELECT id_colaborador, CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) AS colaborador FROM colaborador";
-            $result = mysqli_query($conexion, $sql);
+            $mysqli->query("SELECT id_colaborador, CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) AS colaborador FROM colaborador");
+            $res = $mysqli->use_result();
             
             echo '<option value= 0> Seleccione Colaborador </option>';
-            while($fila = mysqli_fetch_row($result)){
+            while($fila = $res->fetch_array()){
                 echo '<option value='.$fila[0].'>'.utf8_encode($fila[1]).'</option>';
             }
             break;
 
 
         case 'listCargo':
-            $sql = "SELECT * FROM cargo";
-            $result = mysqli_query($conexion, $sql);
+            $mysqli->query("SELECT * FROM cargo");
+            $res = $mysqli->use_result();
             
             echo '<option value= 0> Seleccione Cargo </option>';
-            while($fila = mysqli_fetch_row($result)){
+            while($fila = $res->fetch_array()){
                 echo '<option value='.$fila[0].'>'.utf8_encode($fila[1]).'</option>';
             }
             break;
@@ -170,35 +191,35 @@
 
         case 'listCargoColaborador':
             $idColaborador = $_POST['idColaborador'];
-            $sql = "SELECT car.id_cargo, car.nombre FROM cargo AS car
+            $mysqli->query("SELECT car.id_cargo, car.nombre FROM cargo AS car
                 INNER JOIN colaborador_cargo AS nub ON car.id_cargo = nub.id_cargo
-                WHERE nub.id_colaborador = '$idColaborador'";
-            $result = mysqli_query($conexion, $sql);
+                WHERE nub.id_colaborador = '$idColaborador'");
+            $res = $mysqli->use_result();
             
             echo '<option value= 0> Seleccione Cargo </option>';
-            while($fila = mysqli_fetch_row($result)){
+            while($fila = $res->fetch_array()){
                 echo '<option value='.$fila[0].'>'.utf8_encode($fila[1]).'</option>';
             }
             break;
 
         
         case 'listDia':
-            $sql = "SELECT * FROM dia";
-            $result = mysqli_query($conexion, $sql);
+            $mysqli->query("SELECT * FROM dia");
+            $res = $mysqli->use_result();
             
             echo '<option value= 0> Seleccione Día </option>';
-            while($fila = mysqli_fetch_row($result)){
+            while($fila = $res->fetch_array()){
                 echo '<option value='.$fila[0].'>'.utf8_encode($fila[1]).'</option>';
             }
             break;
 
         
         case 'listTurno':
-            $sql = "SELECT * FROM turno";
-            $result = mysqli_query($conexion, $sql);
+            $mysqli->query("SELECT * FROM turno");
+            $res = $mysqli->use_result();
             
             echo '<option value= 0> Seleccione Turno </option>';
-            while($fila = mysqli_fetch_row($result)){
+            while($fila = $res->fetch_array()){
                 echo '<option value='.$fila[0].'>'.utf8_encode($fila[1]).'</option>';
             }
             break;
