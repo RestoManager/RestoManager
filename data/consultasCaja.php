@@ -10,6 +10,7 @@
             $query .= "SELECT id_compra FROM detalle ORDER BY id_compra DESC LIMIT 1";
 
             $mysqli->multi_query($query);
+            $mysqli->next_result();
             $res = $mysqli->use_result();
             $fila = $result->fetch_row();
             $result->close();
