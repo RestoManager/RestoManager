@@ -11,8 +11,8 @@
 
             $mysqli->multi_query($query);
             $res = $mysqli->use_result();
-            $fila = $result->fetch_row();
-            $result->close();
+            $fila = $res->fetch_row();
+            $res->close();
 
             echo $fila[0];
             break;
@@ -26,7 +26,7 @@
             $idDetalle = $_POST['idDetalle'];
 
             $mysqli->query("INSERT INTO registros_totales (total_compra, total_propina_compra, n_mesa, metodo_pago, registro_items)
-                VALUES ('$compra', '$propina', '$mesa', '$metodoPago', '$idDetalle')");
+                VALUES ('$total', '$propina', '$mesa', '$metodoPago', '$idDetalle')");
             break;
 
 
