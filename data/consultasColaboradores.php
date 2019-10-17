@@ -49,6 +49,7 @@
 
             if ($idTurno > 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 $sql = "INSERT INTO horario (id_colaborador, semana, id_dia, id_turno, hora_entrada, hora_salida, id_cargo)
                 VALUES ('$idColaborador', '$semana', '$idDia', '$idTurno', '$horaIn', '$horaOut', '$idCargo')
                 ON DUPLICATE KEY UPDATE id_turno = '$idTurno', hora_entrada = '$horaIn', hora_salida = '$horaOut', id_cargo = '$idCargo'";
@@ -57,6 +58,11 @@
                 VALUES ('$idColaborador', '$semana', '$idDia', '$idTurno', '$horaIn', '$horaOut', '$idCargo')
                 ON DUPLICATE KEY UPDATE id_turno = '$idTurno', hora_entrada = '$horaIn', hora_salida = '$horaOut', id_cargo = '$idCargo'");
 >>>>>>> ca9808128cfe0396918961e6940fbfca1dbbbe11
+=======
+                $mysqli->query("INSERT INTO horario (id_colaborador, semana, id_dia, id_turno, hora_entrada, hora_salida, id_cargo)
+                VALUES ('$idColaborador', '$semana', '$idDia', '$idTurno', '$horaIn', '$horaOut', '$idCargo')
+                ON DUPLICATE KEY UPDATE id_turno = '$idTurno', hora_entrada = '$horaIn', hora_salida = '$horaOut', id_cargo = '$idCargo'");
+>>>>>>> ajaxcaja
             } else {
                 $mysqli->query("DELETE FROM horario WHERE (id_colaborador, semana, id_dia) = ('$idColaborador', '$semana', '$idDia')");
             }
@@ -83,12 +89,17 @@
             $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
             for ($i=0; $i < 2; $i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 echo '<div class="title">Semana'.($i + 1).'</div>
                 <table class="table">
 =======
                 echo '<div class="title">Semana '.($i + 1).'</div>
                     <table class="table">
 >>>>>>> ca9808128cfe0396918961e6940fbfca1dbbbe11
+=======
+                echo '<div class="title">Semana '.($i + 1).'</div>
+                    <table class="table">
+>>>>>>> ajaxcaja
                     <tr>
                         <th>Día</th>
                         <th>Turno</th>
@@ -105,11 +116,16 @@
                             <td>'.$fila[4].'</td>
                             <td>'.utf8_encode($fila[5]).'</td>
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <td><button class="btn btn-danger modificarTurno" onclick="modHorario('.$i.', '.$j.')">+</button></td>
 =======
                             <td><button class="btn btn-danger modificarTurno"
                                 onclick="modHorario('.$i.', '.$j.')">+</button></td>
 >>>>>>> ca9808128cfe0396918961e6940fbfca1dbbbe11
+=======
+                            <td><button class="btn btn-danger modificarTurno"
+                                onclick="modHorario('.$i.', '.$j.')">+</button></td>
+>>>>>>> ajaxcaja
                             </tr>';
                         $fila = mysqli_fetch_row($result);
                     } else {
@@ -122,9 +138,12 @@
                     }
                 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                 echo '</table>';
 =======
+=======
+>>>>>>> ajaxcaja
                 echo '</table>';
             }
             break;
@@ -180,7 +199,10 @@
                 }
 
                 $fecha = strtotime('+1 day', $fecha);
+<<<<<<< HEAD
 >>>>>>> ca9808128cfe0396918961e6940fbfca1dbbbe11
+=======
+>>>>>>> ajaxcaja
             }
 
             break;
