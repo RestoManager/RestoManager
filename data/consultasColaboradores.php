@@ -114,23 +114,31 @@
             $idColaborador = $_POST['idColaborador'];
             $año = $_POST['año'];
             $mes = $_POST['mes'];
-            $mysqli->query("SELECT a.fecha_hora AS fecha, a.semana, TIME(a.fecha_hora) AS hora, a.firma, a.tipo, c.nombre AS cargo, p.monto
+            $mysqli->query("SELECT a.fecha_hora AS fecha, (YEAR(a.fecha_hora) + WEEK(a.fecha_hora)) % 2 AS semana,
+                    TIME(a.fecha_hora) AS hora, a.firma, a.tipo, c.nombre AS cargo, p.monto,
+                h.hora_entrada AS horarioIn, h.hora_salida AS horarioOut
                 FROM asistencia AS a
                 INNER JOIN cargo AS c ON a.id_cargo = c.id_cargo
-                INNER JOIN propinas AS p ON h.id_colaborador = p.id_colaborador
+                INNER JOIN propinas AS p ON a.id_colaborador = p.id_colaborador
                 INNER JOIN cierre_caja AS cierre ON p.id_cierre_caja = cierre.id_cierre_caja
                 INNER JOIN apertura_caja AS apertura ON cierre.id_apertura_caja = apertura.id_apertura_caja
-                INNER JOIN venta_dia AS v ON apertura.id_apertura_caja = v.apertura_mañana OR apertura.id_apertura_caja = v.apertura_tarde
+                INNER JOIN venta_dia AS v ON apertura.id_apertura_caja = v.apertura_mañana
+                    OR apertura.id_apertura_caja = v.apertura_tarde
+                INNER JOIN horario AS h ON a.id_colaborador = h.id_colaborador
+                    AND DAYOFWEEK(fecha) - 1 = h.id_dia
+                    AND a.id_turno = h.id_turno
                 WHERE a.id_colaborador = '$idColaborador' AND MONTH(fecha) = '$mes'
                 ORDER BY a.id_asistencia DESC");
 
             $res = $mysqli->use_result();
             $i = 0;
+            // guardar cada par de filas de entrada y salida como un arreglo asociativo.
             while($fila = $res->fetch_assoc()){
                 if ($fila['tipo'] == 0) {
-                    $fila{$i} = ['fecha' => $fila['fecha'], 'semana' => $fila['semana'], 'horaIn' => $fila['hora'], 'firmaIn' => $fila['firma']];
+                    $fila{$i} = ['fecha' => $fila['fecha'], 'semana' => $fila['semana'], 'horaIn' => new DateTime($fila['horaIn']), 'firmaIn' => $fila['firma']];
                 } else {
-                    $fila{$i} = ['horaOut' => $fila['hora'], 'firmaOut' => $fila['firma'], 'cargo' => $fila['cargo'], $fila['monto']];
+                    $fila{$i} = ['horaOut' => new DateTime($fila['hora']), 'firmaOut' => $fila['firma'], 'cargo' => $fila['cargo'], 'monto' => $fila['monto'],
+                        'horarioIn' => new DateTime($fila['horarioIn']), 'horarioOut' => new DateTime($fila['horarioOut'])];
                     $i++;
                 }
             }
@@ -139,12 +147,15 @@
             $largoMes = date('t', $fecha);
             $dias = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
 
+            // crear una tabla con todos los días del mes, y llenar las filas con asistencia.
             for ($i = 0, $j = 0; $i < $largoMes; $i++) { 
                 echo '<tr><td>'.$dias[date('w', $fecha)].' '.date('d', $fecha).'</td>';
 
                 if ($fecha == strtotime($fila{$j}['fecha'])) {
-                    $atraso;
-                    $hrsExtra;
+                    $atraso = $fila{$j}['horaIn']->diff($fila{$j}['horarioIn']);
+                    $atraso->format('%R%h%i');
+                    $hrsExtra = $fila{$j}['horaOut']->diff($fila{$j}['horarioOut']);
+                    $hrsExtra->format('%R%h%i');
 
                     echo '<td>'.$fila{$j}['horaIn'].'</td>
                         <td>'.$fila{$j}['firmaIn'].'</td>
@@ -154,9 +165,17 @@
                         <td>'.$atraso.'</td>
                         <td>'.$hrsExtra.'</td>
                         <td>'.$fila{$j}['monto'].'</td></tr>';
+
                     $j++;
                 } else {
-                    # code...
+                    echo '<td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>
+                        <td>---</td>';
                 }
 
                 $fecha = strtotime('+1 day', $fecha);
