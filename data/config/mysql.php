@@ -1,3 +1,5 @@
+  <?php
+  
     $mysqli = new mysqli('localhost', 'cac52927', 'sW{EXpAvPG$3L:h', 'cac52927_Pruebas');
 
     if (mysqli_connect_errno()) {
@@ -6,3 +8,6 @@
     }
     
     $status = $_POST['curStatus'];
+
+
+    ?>

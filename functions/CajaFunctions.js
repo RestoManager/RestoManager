@@ -174,12 +174,12 @@ function selectItem(item) {
 					if (esUber == false) {
 						let precio = parseInt(items[i].price);
 						totalCompra = precio + totalCompra;
-						currentCompra.push({ name: items[i].name, price: precio, code: items[i].code });
+						currentCompra.push({ "name": items[i].name, "price": precio, "code": items[i].code });
 						Total.innerHTML = "$" + totalCompra;
 					} else {
 						let precio = parseInt(items[i].priceUber);
 						totalCompra = precio + totalCompra;
-						currentCompra.push({ name: items[i].name, price: precio, code: items[i].code });
+						currentCompra.push({ "name": items[i].name, "price": precio, "code": items[i].code });
 						Total.innerHTML = "$" + totalCompra;
 					}
 				}
@@ -332,20 +332,20 @@ function imprimir() {
 var nCuentas = 1;
 var nT = 0; //numero de veces repetido el ciclo
 
+var curCompraObject = {};
 function pagar() {
         
 	if (pagoCustom == false) {
 		if (formaPago !== "") {
 			
 			
-			let curCompraObject = {};
 			for (i in currentCompra){
-				Object.defineProperty(curCompraObject, i, {value: currentCompra[i]});
+				curCompraObject[i] = currentCompra[i];
 			}
 			guardarItem(curCompraObject);
 			let pro = inProp.value;
-			guardarCompra(formaPago, pro, totalCompra);
-
+			guardarCompra( pro, totalCompra);
+			curCompraObject = {};
 			Transacciones.push({ transID: nTransas, formaPago: formaPago, items: currentCompra, propina: inProp.value, total: totalCompra});
 			nTransas += 1;
 			cuentaMesas[curMesa] = { key: null, items: null, porPagar: false, total: null };
@@ -550,32 +550,42 @@ function listaEspera(){
 
 
 // AJAXSS
+
+
+function guardarItem(obj){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	  if (this.readyState == 4 && this.status == 200) {
+		idDetalle = parseInt(this.responseText);
+		alert('guardade');
+	  }
+	};
+	let obj2 = JSON.stringify(obj);
+	xhttp.open("POST", "data/consultasCaja.php", false);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	statusRequest = "addDetalle";
+	let dataa = 'items='+obj2+'&curStatus='+statusRequest;
+	xhttp.send(dataa);
+	
+}	
+
 var statusRequest = "";
 var idDetalle;
-function guardarItem(obj) {
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-	  if (this.readyState == 4 && this.status == 200) {
-		idDetalle = parseInt(this.responseText);
-		alert('todo ok');
-	  }
-	};
-	xhttp.open("POST", "consultasCaja.php", true);
-	statusRequest = "addDetalle";
-	
-	xhttp.send({items: obj, status: statusRequest});
-  }
 
-  function guardarCompra(frompago, propine, totalcomp) {
+
+  function guardarCompra(propine, totalcomp) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
-		idDetalle = parseInt(this.responseText);
+	
 		alert('todo ok');
 	  }
 	};
-	xhttp.open("POST", "consultasCaja.php", true);
+	xhttp.open("POST", "data/consultasCaja.php", false);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	statusRequest = "addTotal";
+	let ffpago = 1;
+	let dataa = 'metodoPago='+ffpago+'&curStatus='+statusRequest+'&propina='+propine+'&total='+totalcomp+'&mesa='+curMesa+'&idDetalle='+idDetalle;
 	
-	xhttp.send({metodoPago: frompago, status: statusRequest, propina: propine, total: totalcomp, mesa: curMesa, idDetalle: idDetalle});
+	xhttp.send(dataa);
   }
