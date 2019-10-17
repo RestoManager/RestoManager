@@ -1,6 +1,5 @@
 <?php
-    $mysqli = new mysqli('localhost', 'cac52927', 'sW{EXpAvPG$3L:h', 'cac52927_Pruebas');
-    $status = $_POST['curStatus'];
+    require 'config/mysql.php';
 
     switch ($status) {
         /*  INSERTS  */
