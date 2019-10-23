@@ -19,7 +19,7 @@
             break;
 
 
-        case 'addTotal':
+        case 'addCompra':
             $total = $_POST['total'];
             $propina = $_POST['propina'];
             $mesa = $_POST['mesa'];
