@@ -5,11 +5,11 @@
         /*  INSERTS  */
 
         case 'addColaborador':
-            $rut = $_POST['rut'];
-            $nombre = $_POST['nombre'];
-            $apellidoP = $_POST['apellidoP'];
-            $apellidoM = $_POST['apellidoM'];
-            $correo = $_POST['correo'];
+            $nombre = $_POST['user_name'];
+            $apellidoP = $_POST['user_apellido_paterno'];
+            $apellidoM = $_POST['user_apellido_materno'];
+            $rut = $_POST['user_rut'];
+            $correo = $_POST['user_mail'];
 
             $mysqli->query("INSERT INTO colaborador (rut, nombre, apellido_paterno, apellido_materno, correo)
                 VALUES ('$rut', '$nombre', '$apellidoP', '$apellidoM', '$correo')");
@@ -60,6 +60,7 @@
         /*  MOSTRAR  */
 
         case 'verHorario':
+
             $idColaborador = $_POST['idColaborador'];
             $mysqli->query("SELECT DISTINCT h.semana, d.id_dia, t.nombre, h.hora_entrada, h.hora_salida, c.nombre
                 FROM horario AS h
@@ -180,6 +181,7 @@
 
                 $fecha = strtotime('+1 day', $fecha);
             }
+
             break;
 
 

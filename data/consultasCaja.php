@@ -1,6 +1,6 @@
 <?php
     require 'config/mysql.php';
-
+    
     switch ($status) {
         /*  INSERTS  */
 
@@ -26,7 +26,7 @@
             $metodoPago = $_POST['metodoPago'];
             $idDetalle = $_POST['idDetalle'];
 
-            $mysqli->query("INSERT INTO registros_totales (total_compra, total_propina_compra, n_mesa, metodo_pago, registro_items)
+            $mysqli->query("INSERT INTO registros_totales (total_compra, total_propina_compra, n_mesa, id_metodo_pago, registro_items)
                 VALUES ('$total', '$propina', '$mesa', '$metodoPago', '$idDetalle')");
             break;
 

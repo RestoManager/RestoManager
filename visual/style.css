@@ -3,6 +3,7 @@
     background-color: black;
     color: white;
     font-size: 30px;
+    width: 100%;
 }
 
 .botonesMenu{
@@ -33,4 +34,21 @@
 td{
     height: 30px;
     width: 30px;
+}
+.window{
+    width: 500px;
+    height: 400px;
+    background-color: white;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    padding-left: 10px;
+    text-align: center;
+    border: solid 5px white;
+    border-radius: 20px;
+    display: none;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0,0, 0.75);
 }

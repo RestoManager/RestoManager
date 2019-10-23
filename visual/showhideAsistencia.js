@@ -1,10 +1,13 @@
+var status = "";
 $(document).ready(function(){
 
     $('#show-reg-user').click(function(){
+        status = "addColaborador";
         $('.RegUser').css('display', 'block');
         $('.AsignarCargo').css('display', 'none');
         $('.RegistroAsistencia').css('display', 'none');
         $('.asistencia').css('display', 'none');
+        $('.modificarHorario').css('display','none');
 
     });
 
@@ -13,6 +16,28 @@ $(document).ready(function(){
         $('.AsignarCargo').css('display', 'block');
         $('.RegistroAsistencia').css('display', 'none');
         $('.asistencia').css('display', 'none');
+        $('.modificarHorario').css('display','none');
+        status = 'listColaborador';
+
+        $.ajax({
+            type: "POST",
+            url: "data/consultasColaboradores.php",
+            data: {curStatus: status},
+            success: function(r){
+                $('#nameColaborador').html(r);
+            }
+        });
+
+        status = 'listCargo';
+
+        $.ajax({
+            type: "POST",
+            url: "data/consultasColaboradores.php",
+            data: {curStatus: status},
+            success: function(r){
+                $('#nameCargo').html(r);
+            }
+        });
 
 
     });
@@ -22,6 +47,7 @@ $(document).ready(function(){
         $('.AsignarCargo').css('display', 'none');
         $('.RegistroAsistencia').css('display', 'block');
         $('.asistencia').css('display', 'none');
+        $('.modificarHorario').css('display','none');
 
 
     });
@@ -31,6 +57,7 @@ $(document).ready(function(){
         $('.AsignarCargo').css('display', 'none');
         $('.RegistroAsistencia').css('display', 'none');
         $('.asistencia').css('display', 'block');
+        $('.modificarHorario').css('display','none');
         
         let canva = document.querySelector('#firmachica');
         let ctxx = canva.getContext('2d');
@@ -53,6 +80,27 @@ $(document).ready(function(){
         ctxx.stroke();
         
         ctxx.restore();
+    });
+
+    $('#show-modificar-horario').click(function(){
+        $('.RegUser').css('display', 'none');
+        $('.AsignarCargo').css('display', 'none');
+        $('.RegistroAsistencia').css('display', 'none');
+        $('.asistencia').css('display', 'none');
+        $('.modificarHorario').css('display','block');
+
+        status = "listColaborador";
+        $.ajax({
+            type: "POST",
+            url: "data/consultasColaboradores.php",
+            data: {curStatus: status},
+            success: function(r){
+                $('#nameColaborador2').html(r);
+            }
+
+
+        });
+
     });
 
 

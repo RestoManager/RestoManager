@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id="peo">HOLA</button>
+    <div id="aa"></div>
+</body>
+<script src="jquery-3.2.1.min.js"></script>
+<script>
+var obj = {0: {name: "AA", apellide: 56}, 1: {name: "BB", apellide: 16}};
+$(document).ready(function(){
+
+    $('#peo').click(function(){
+        let obj2 = JSON.stringify(obj);
+        $.ajax({
+            type: "POST",
+            url: "data/consultasCaja.php",
+            data: {items:obj2, curStatus: "addDetalle"},
+            success: function(r){
+                $('#aa').html = r;
+                alert('chupa');
+            }
+        });
+    });
+
+})
+</script>
+</html>

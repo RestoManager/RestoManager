@@ -17,17 +17,17 @@
             <button class="btn btn-dark" id="show-asign-cargo">Asignar Cargo</button>
             <button class="btn btn-dark" id="show-reg-asistencia">Registrar Asistencia</button>
             <button class="btn btn-dark" id="show-asistencia">Horario</button>
-            <button class="btn btn-dark">Modificar Horario</button>
+            <button class="btn btn-dark" id="show-modificar-horario">Modificar Horario</button>
         </div>
 
         <div class="RegUser container" style="display: none">
-            <form method="POST" id="registro_user">
+           
 
                 <input type="text" name="user_name" id="user_name" class="form-control" placeholder="Nombre">
                 <br>
-                <input type="text" name="user_apellido_materno" id="user_apellido_materno" class="form-control" placeholder="Apellido Materno">
-                <br>
                 <input type="text" name="user_apellido_paterno" id="user_apellido_paterno" class="form-control" placeholder="Apellido Patero">
+                <br>
+                <input type="text" name="user_apellido_materno" id="user_apellido_materno" class="form-control" placeholder="Apellido Materno">
                 <br>
                 <input type="text" name="user_rut" id="user_rut" class="form-control" placeholder="Rut">
                 <br>
@@ -40,21 +40,21 @@
                 <button id="enviarNewUser" class="btn btn-primary">Send</button>
                 <input type="reset" value="reset" class="btn btn-danger">
 
-            </form>
+           
         </div>
 
         <div class="AsignarCargo container" style="display: none">
             <label for="Colaborador">Colaborador</label>
-            <select name="Colaborador" id="" class="form-control">
+            <select name="Colaborador" id="nameColaborador" class="form-control">
                 <option value="">Colaborador</option>
             </select>
             <br>
             <label for="Cargo">Cargo</label>
-            <select name="Cargo" id="" class="form-control">
+            <select name="Cargo" id="nameCargo" class="form-control">
                 <option value="">Cargo</option>
             </select>
             <br>
-            <button class="btn btn-danger">Asignar</button>
+            <button class="btn btn-danger" id="asignarCargo">Asignar</button>
             <button class="btn btn-danger">Quitar</button>
             <br>
             <div id="ListaCargos">ningune</div>
@@ -95,8 +95,8 @@
         </div>
         
         <div class="asistencia container" style="display: none">
-            <div class="row container">
-                <div class="col-md-8">
+            <div class="container">
+                <div class="">
                     <div class="title">Asistencia</div>
                     <table class="table">
                         <tr>
@@ -134,46 +134,46 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="info col-md-4">
-                    <div class="title">Trunos</div>
-                    <div class="title">Semana1</div>
-                    <table class="table">
-                        <tr>
-                            <th>Dia</th>
-                            <th>Entrada</th>
-                            <th>Salida</th>
-                            <th>Turno</th>
-                        </tr>
-                        <tbody>
-                            <tr>
-                                <td>Lunes</td>
-                                <td>09:00</td>
-                                <td>18:00</td>
-                                <td>Mañana</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="title">Semana2</div>
-                    <table class="table">
-                            <tr>
-                                <th>Dia</th>
-                                <th>Entrada</th>
-                                <th>Salida</th>
-                                <th>Turno</th>
-                            </tr>
-                            <tbody>
-                                <tr>
-                                    <td>Lunes</td>
-                                    <td>09:00</td>
-                                    <td>18:00</td>
-                                    <td>Mañana</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                </div>
+                
 
 
             </div>
+        </div>
+
+        <div class="modificarHorario container" style="display: none">
+                <div class="">
+                        <div class="title">Trunos</div>
+                        <div>
+                                <label for="Colaborador">Colaborador</label>
+                                <select name="Colaborador" id="nameColaborador2" class="form-control">
+                                    <option value="">Colaborador</option>
+                                </select>
+                        </div>
+                        
+                            <div class="container" id="tablaHorario">
+                                
+                            </div>
+                          
+                                <div class="window"style="border: black solid 3px" id="modTurno">
+                                    <div class="title">18/07</div>
+                                    <select name="" id="nameTurno" class="form-control">
+                                        <option value="">Turno</option>
+                                    </select>
+                                    <select name="" id="nameCargo2" class="form-control">
+                                        <option value="">Cargo</option>
+                                    </select>
+                                    <label for="entrada">Entrada</label>
+                                    <input type="time" name="entrada" id="horaEntrada" class="form-control" >
+                                    <label for="salida">Salida</label>
+                                    <input type="time" name="salida" id="horaSalida" class="form-control">
+
+                                    <button class="btn btn-danger" id="enviarModHorario">Enviar</button>
+                                    <button class="btn btn-danger">borrar</button>
+                                    <button class="btn btn-danger" id="cancelMod">cancelar</button>
+                                </div>
+                            
+                        
+                    </div>
         </div>
     </div>
 </body>
@@ -182,8 +182,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="jquery-3.2.1.min.js"></script>
-    <script src="functions/asistenciaFunctions.js"></script>
+    <script src="data/ajaxAsistencia.js"></script>
     <script src="visual/showhideAsistencia.js"></script>
+    <script src="functions/asistenciaFunctions.js"></script>
     <script src="functions/firma.js"></script>
     
  
